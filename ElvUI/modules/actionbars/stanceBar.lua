@@ -288,7 +288,6 @@ end
 NUM_STANCE_SLOTS = 10;
 function AB:UpdateStanceBindings()
 	for i = 1, NUM_STANCE_SLOTS do
-		print(i)
 		if self.db.hotkeytext then
 			_G["ElvUI_StanceBarButton"..i.."HotKey"]:Show()
 			_G["ElvUI_StanceBarButton"..i.."HotKey"]:SetText(GetBindingKey("CLICK ElvUI_StanceBarButton"..i..":LeftButton"))
@@ -323,5 +322,5 @@ function AB:CreateBarShapeShift()
 	self:AdjustMaxStanceButtons();
 	self:PositionAndSizeBarShapeShift();
 	self:StyleShapeShift();
-	self:UpdateStanceBindings()
+	--self:UpdateStanceBindings()
 end

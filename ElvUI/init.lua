@@ -34,7 +34,7 @@ _G[AddOnName] = Engine;
 
 local tcopy = table.copy
 function AddOn:OnInitialize()
-	print("test");
+	
 	if not ElvCharacterDB then
 		ElvCharacterDB = {};
 	end

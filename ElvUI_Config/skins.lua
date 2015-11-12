@@ -39,11 +39,7 @@ E.Options.args.skins = {
 					name = L["Death Recap"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				garrison = {
-					type = 'toggle',
-					name = GARRISON_LOCATION_TOOLTIP,
-					desc = L["TOGGLESKIN_DESC"],
-				},
+				--CHANGES:Lanrutcon:Removed WoD Stuff (Garrison)
 				bmah = {
 					type = 'toggle',
 					name = L["Black Market AH"],

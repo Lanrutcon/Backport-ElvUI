@@ -89,7 +89,9 @@ function AB:UpdateMicroPositionDimensions()
 			button:Point('TOP', lastColumnButton, 'BOTTOM', 0, 27);
 			numRows = numRows + 1
 		else
-			button:Point('LEFT', prevButton, 'RIGHT', -3, 0);
+			if(prevButton ~= button) then
+				button:Point('LEFT', prevButton, 'RIGHT', -3, 0);
+			end
 		end
 
 		prevButton = button

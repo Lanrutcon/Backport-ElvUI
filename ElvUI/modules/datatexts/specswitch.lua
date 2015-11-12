@@ -29,7 +29,6 @@ local function OnEvent(self, event)
 
 	local talent, loot = '', ''
 	if GetSpecialization(false, false, active) then
-		print(GetSpecializationInfo(GetSpecialization(false, false, active)))
 		talent = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', select(4, GetSpecializationInfo(GetSpecialization(false, false, active))))
 	end
 

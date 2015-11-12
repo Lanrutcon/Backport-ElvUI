@@ -462,58 +462,7 @@ E.Options.args.general = {
 					type = 'group',
 					name = L["Minimap Buttons"],
 					args = {
-						garrison = {
-							order = 1,
-							type = 'group',
-							name = GARRISON_LOCATION_TOOLTIP,
-							get = function(info) return E.db.general.minimap.icons.garrison[ info[#info] ] end,
-							set = function(info, value) E.db.general.minimap.icons.garrison[ info[#info] ] = value; E:GetModule('Minimap'):UpdateSettings() end,
-							args = {
-								scale = {
-									order = 1,
-									type = 'range',
-									name = L["Scale"],
-									min = 0.5, max = 2, step = 0.05,
-								},
-								position = {
-									order = 2,
-									type = 'select',
-									name = L["Position"],
-									disabled = function() return E.private.general.minimap.hideGarrison end,
-									values = {
-										["LEFT"] = L["Left"],
-										["RIGHT"] = L["Right"],
-										["TOP"] = L["Top"],
-										["BOTTOM"] = L["Bottom"],
-										["TOPLEFT"] = L["Top Left"],
-										["TOPRIGHT"] = L["Top Right"],
-										["BOTTOMLEFT"] = L["Bottom Left"],
-										["BOTTOMRIGHT"] = L["Bottom Right"],
-									},
-								},
-								xOffset = {
-									order = 3,
-									type = 'range',
-									name = L["xOffset"],
-									min = -50, max = 50, step = 1,
-									disabled = function() return E.private.general.minimap.hideGarrison end,
-								},
-								yOffset = {
-									order = 4,
-									type = 'range',
-									name = L["yOffset"],
-									min = -50, max = 50, step = 1,
-									disabled = function() return E.private.general.minimap.hideGarrison end,
-								},
-								hideGarrison = {
-									order = 5,
-									type = 'toggle',
-									name = L["Hide"],
-									get = function(info) return E.private.general.minimap.hideGarrison end,
-									set = function(info, value) E.private.general.minimap.hideGarrison = value; E:StaticPopup_Show("PRIVATE_RL") end,
-								},
-							},
-						},
+						--CHANGES:Lanrutcon:Removed MoP Stuff (Garrison)
 						calendar = {
 							order = 2,
 							type = 'group',
@@ -692,48 +641,7 @@ E.Options.args.general = {
 								},
 							},
 						},
-						challengeMode = {
-							order = 5,
-							type = 'group',
-							name = CHALLENGE_MODE,
-							get = function(info) return E.db.general.minimap.icons.challengeMode[ info[#info] ] end,
-							set = function(info, value) E.db.general.minimap.icons.challengeMode[ info[#info] ] = value; E:GetModule('Minimap'):UpdateSettings() end,
-							args = {
-								scale = {
-									order = 1,
-									type = 'range',
-									name = L["Scale"],
-									min = 0.5, max = 2, step = 0.05,
-								},
-								position = {
-									order = 2,
-									type = 'select',
-									name = L["Position"],
-									values = {
-										["LEFT"] = L["Left"],
-										["RIGHT"] = L["Right"],
-										["TOP"] = L["Top"],
-										["BOTTOM"] = L["Bottom"],
-										["TOPLEFT"] = L["Top Left"],
-										["TOPRIGHT"] = L["Top Right"],
-										["BOTTOMLEFT"] = L["Bottom Left"],
-										["BOTTOMRIGHT"] = L["Bottom Right"],
-									},
-								},
-								xOffset = {
-									order = 3,
-									type = 'range',
-									name = L["xOffset"],
-									min = -50, max = 50, step = 1,
-								},
-								yOffset = {
-									order = 4,
-									type = 'range',
-									name = L["yOffset"],
-									min = -50, max = 50, step = 1,
-								},
-							},
-						},
+						--CHANGES:Lanrutcon:Removed MoP Stuff (Challenge)
 						vehicleLeave = {
 							order = 5,
 							type = 'group',

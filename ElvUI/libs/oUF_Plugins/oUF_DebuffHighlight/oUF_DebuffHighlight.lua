@@ -195,7 +195,6 @@ function GetSpecializationInfo(index)
 end
 
 function GetSpecializationInfoByID(id)
-	print(id);
 	local id, name, description, icon, _, background = GetTalentTabInfo(id)
 	local class = UnitClass("player");
 	local role;

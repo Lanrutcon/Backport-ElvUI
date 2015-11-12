@@ -251,6 +251,7 @@ local function FontTemplate(fs, font, fontSize, fontStyle)
 end
 
 local function StyleButton(button, noHover, noPushed, noChecked)
+	
 	if button.SetHighlightTexture and not button.hover and not noHover then
 		local hover = button:CreateTexture()
 		hover:SetTexture(1, 1, 1, 0.3)
@@ -258,7 +259,7 @@ local function StyleButton(button, noHover, noPushed, noChecked)
 		button.hover = hover
 		button:SetHighlightTexture(hover)
 	end
-
+	
 	if button.SetPushedTexture and not button.pushed and not noPushed then
 		local pushed = button:CreateTexture()
 		pushed:SetTexture(0.9, 0.8, 0.1, 0.3)
@@ -281,7 +282,7 @@ local function StyleButton(button, noHover, noPushed, noChecked)
 		cooldown:ClearAllPoints()
 		cooldown:SetInside()
 		cooldown:SetDrawEdge(false)
-		cooldown:SetSwipeColor(0, 0, 0, 1)
+		--cooldown:SetSwipeColor(0, 0, 0, 1)	--CHANGES:Lanrutcon:MoP function
 	end
 end
 

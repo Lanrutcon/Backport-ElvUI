@@ -92,7 +92,9 @@ function AB:PositionAndSizeBar(barName)
 	local numColumns = ceil(numButtons / buttonsPerRow);
 	local widthMult = self.db[barName].widthMult;
 	local heightMult = self.db[barName].heightMult;
+	--CHANGES:Lanrutcon:handledbars table is nil, changing to bardefaults
 	local bar = self["handledBars"][barName]
+	--local bar = self["barDefaults"][barName]
 
 	bar.db = self.db[barName]
 	bar.db.position = nil; --Depreciated
@@ -245,6 +247,7 @@ function AB:PositionAndSizeBar(barName)
 end
 
 function AB:CreateBar(id)
+	print("creating bars");
 	local bar = CreateFrame('Frame', 'ElvUI_Bar'..id, E.UIParent, 'SecureHandlerStateTemplate');
 	local point, anchor, attachTo, x, y = split(',', self['barDefaults']['bar'..id].position)
 	bar:Point(point, anchor, attachTo, x, y)
@@ -460,7 +463,7 @@ function AB:UpdateButtonSettings()
 	end
 
 	self:UpdatePetBindings()
-	self:UpdateStanceBindings()
+	--self:UpdateStanceBindings()
 	for barName, bar in pairs(self["handledBars"]) do
 		self:UpdateButtonConfig(bar, bar.bindButtons)
 	end
@@ -598,9 +601,11 @@ function AB:DisableBlizzard()
 	MultiBarBottomRight:SetParent(UIHider)
 	MultiBarLeft:SetParent(UIHider)
 	MultiBarRight:SetParent(UIHider)
+	
 
 	-- Hide MultiBar Buttons, but keep the bars alive
 	for i=1,12 do
+		
 		_G["ActionButton" .. i]:Hide()
 		_G["ActionButton" .. i]:UnregisterAllEvents()
 		_G["ActionButton" .. i]:SetAttribute("statehidden", true)
@@ -638,15 +643,18 @@ function AB:DisableBlizzard()
 		_G['MultiCastActionButton'..i]:SetAttribute("statehidden", true)
 	end
 
-	ActionBarController:UnregisterAllEvents()
-	ActionBarController:RegisterEvent('UPDATE_EXTRA_ACTIONBAR')
+	--CHANGES:Lanrutcon:Commented MoP Stuff
+	--ActionBarController:UnregisterAllEvents()
+	--ActionBarController:RegisterEvent('UPDATE_EXTRA_ACTIONBAR')	
+	
+	
 
 	MainMenuBar:EnableMouse(false)
 	MainMenuBar:SetAlpha(0)
 	MainMenuExpBar:UnregisterAllEvents()
 	MainMenuExpBar:Hide()
 	MainMenuExpBar:SetParent(UIHider)
-
+	
 	for i=1, MainMenuBar:GetNumChildren() do
 		local child = select(i, MainMenuBar:GetChildren())
 		if child then
@@ -655,6 +663,8 @@ function AB:DisableBlizzard()
 			child:SetParent(UIHider)
 		end
 	end
+	
+		
 
 	ReputationWatchBar:UnregisterAllEvents()
 	ReputationWatchBar:Hide()
@@ -664,19 +674,26 @@ function AB:DisableBlizzard()
 	MainMenuBarArtFrame:UnregisterEvent("ADDON_LOADED")
 	MainMenuBarArtFrame:Hide()
 	MainMenuBarArtFrame:SetParent(UIHider)
+	
 
-	StanceBarFrame:UnregisterAllEvents()
-	StanceBarFrame:Hide()
-	StanceBarFrame:SetParent(UIHider)
-
-	OverrideActionBar:UnregisterAllEvents()
-	OverrideActionBar:Hide()
-	OverrideActionBar:SetParent(UIHider)
-
+	--CHANGES:Lanrutcon: in cata is still shapeshift bar
+--	StanceBarFrame:UnregisterAllEvents()
+--	StanceBarFrame:Hide()
+--	StanceBarFrame:SetParent(UIHider)
+	
+	ShapeshiftBarFrame:UnregisterAllEvents()
+	ShapeshiftBarFrame:Hide()
+	ShapeshiftBarFrame:SetParent(UIHider)
+	
+	
+--	OverrideActionBar:UnregisterAllEvents()
+--	OverrideActionBar:Hide()
+--	OverrideActionBar:SetParent(UIHider)
+	
 	PossessBarFrame:UnregisterAllEvents()
 	PossessBarFrame:Hide()
 	PossessBarFrame:SetParent(UIHider)
-
+	
 	PetActionBarFrame:UnregisterAllEvents()
 	PetActionBarFrame:Hide()
 	PetActionBarFrame:SetParent(UIHider)
@@ -684,11 +701,15 @@ function AB:DisableBlizzard()
 	MultiCastActionBarFrame:UnregisterAllEvents()
 	MultiCastActionBarFrame:Hide()
 	MultiCastActionBarFrame:SetParent(UIHider)
+	
+	
 
 	--This frame puts spells on the damn actionbar, fucking obliterate that shit
 	IconIntroTracker:UnregisterAllEvents()
 	IconIntroTracker:Hide()
 	IconIntroTracker:SetParent(UIHider)
+	
+	
 
 	InterfaceOptionsCombatPanelActionButtonUseKeyDown:SetScale(0.0001)
 	InterfaceOptionsCombatPanelActionButtonUseKeyDown:SetAlpha(0)
@@ -704,6 +725,9 @@ function AB:DisableBlizzard()
 	InterfaceOptionsStatusTextPanelXP:SetScale(0.00001)
 	self:SecureHook('BlizzardOptionsPanel_OnEvent')
 	--InterfaceOptionsFrameCategoriesButton6:SetScale(0.00001)
+	
+	
+	
 	if PlayerTalentFrame then
 		PlayerTalentFrame:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	else
@@ -911,17 +935,23 @@ function AB:VehicleFix()
 end
 
 function AB:Initialize()
+	print("init actionbar");
 	self.db = E.db.actionbar
 	if E.private.actionbar.enable ~= true then return; end
+	
 	E.ActionBars = AB;
 
 	self:DisableBlizzard()
-
 	self:SetupExtraButton()
+	print("################################################");
 	self:SetupMicroBar()
+	print("################################################");
 	self:UpdateBar1Paging()
+	
+	
 
 	for i=1, 6 do
+		
 		self:CreateBar(i)
 	end
 	self:CreateBarPet()
@@ -932,16 +962,11 @@ function AB:Initialize()
 
 	self:LoadKeyBinder()
 	self:RegisterEvent("UPDATE_BINDINGS", "ReassignBindings")
-	self:RegisterEvent("PET_BATTLE_CLOSE", "ReassignBindings")
-	self:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
+	--self:RegisterEvent("PET_BATTLE_CLOSE", "ReassignBindings")
+	--self:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
 	self:RegisterEvent('UPDATE_VEHICLE_ACTIONBAR', 'VehicleFix')
 	self:RegisterEvent('UPDATE_OVERRIDE_ACTIONBAR', 'VehicleFix')
 
-	if C_PetBattles.IsInBattle() then
-		self:RemoveBindings()
-	else
-		self:ReassignBindings()
-	end
 
 	if not GetCVarBool('lockActionBars') then
 		SetCVar('lockActionBars', 1)
