@@ -402,13 +402,14 @@ function UF:Configure_FontString(obj)
 	obj:FontTemplate() --This is temporary.
 end
 
+--CHANGES:Lanrutcon:Commented WoD stuff
 function UF:Update_AllFrames()
 	if InCombatLockdown() then self:RegisterEvent('PLAYER_REGEN_ENABLED'); return end
 	if E.private["unitframe"].enable ~= true then return; end
 	self:UpdateColors()
 	self:Update_FontStrings()
 	self:Update_StatusBars()
-	BG:UpdateSettings()
+	--BG:UpdateSettings()	--WoD Stuff
 
 	for unit in pairs(self['units']) do
 		if self.db['units'][unit].enable then

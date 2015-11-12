@@ -29,27 +29,29 @@ local function OnEvent(self, event)
 
 	local talent, loot = '', ''
 	if GetSpecialization(false, false, active) then
+		print(GetSpecializationInfo(GetSpecialization(false, false, active)))
 		talent = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', select(4, GetSpecializationInfo(GetSpecialization(false, false, active))))
 	end
 
-	local specialization = GetLootSpecialization()
-	if specialization == 0 then
-		local specIndex = GetSpecialization();
+	--CHANGES:Lanrutcon:Commented MoP stuff
+--	local specialization = GetLootSpecialization()
+--	if specialization == 0 then
+--		local specIndex = GetSpecialization();
 
-		if specIndex then
-			local specID, _, _, texture = GetSpecializationInfo(specIndex);
-			loot = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', texture)
-		else
-			loot = 'N/A'
-		end
-	else
-		local specID, _, _, texture = GetSpecializationInfoByID(specialization);
-		if specID then
-			loot = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', texture)
-		else
-			loot = 'N/A'
-		end
-	end
+--		if specIndex then
+--			local specID, _, _, texture = GetSpecializationInfo(specIndex);
+--			loot = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', texture)
+--		else
+--			loot = 'N/A'
+--		end
+--	else
+--		local specID, _, _, texture = GetSpecializationInfoByID(specialization);
+--		if specID then
+--			loot = format('|T%s:14:14:0:0:64:64:4:60:4:60|t', texture)
+--		else
+--			loot = 'N/A'
+--		end
+--	end
 
 	self.text:SetFormattedText('%s: %s %s: %s', L["Spec"], talent, LOOT, loot)
 end
@@ -130,4 +132,15 @@ E['valueColorUpdateFuncs'][ValueColorUpdate] = true
 	click - function to fire when clicking the datatext
 	onEnterFunc - function to fire OnEnter
 ]]
-DT:RegisterDatatext('Talent/Loot Specialization',{"PLAYER_ENTERING_WORLD", "CHARACTER_POINTS_CHANGED", "PLAYER_TALENT_UPDATE", "ACTIVE_TALENT_GROUP_CHANGED", 'PLAYER_LOOT_SPEC_UPDATED'}, OnEvent, nil, OnClick, OnEnter)
+DT:RegisterDatatext('Talent/Loot Specialization',{"PLAYER_ALIVE", "CHARACTER_POINTS_CHANGED", "PLAYER_TALENT_UPDATE", "ACTIVE_TALENT_GROUP_CHANGED", 'PLAYER_LOOT_SPEC_UPDATED'}, OnEvent, nil, OnClick, OnEnter)
+
+-------------MISSING FUNCTIONS-----
+--CHANGES:Lanrutcon
+
+function GetSpecializationInfo(index)
+	return GetTalentTabInfo(index);
+end
+
+function GetSpecialization()
+	return GetPrimaryTalentTree();
+end

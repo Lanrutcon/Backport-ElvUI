@@ -828,12 +828,13 @@ function GetColoredName(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, a
 	end
 	local info = ChatTypeInfo[chatType];
 	
+	--CHANGES:Lanrutcon:Ambiguate is a MoP function, also not needed in PServers since it's function is to return character and realm string
 	--ambiguate guild chat names
-	if (chatType == "GUILD") then
-		arg2 = Ambiguate(arg2, "guild")
-	else
-		arg2 = Ambiguate(arg2, "none")
-	end
+--	if (chatType == "GUILD") then
+--		arg2 = Ambiguate(arg2, "guild")
+--	else
+--		arg2 = Ambiguate(arg2, "none")
+--	end
 	
 	if ( info and info.colorNameByClass and arg12 ) then
 		local _, localizedClass, englishClass, localizedRace, englishRace, sex = pcall(GetPlayerInfoByGUID, arg12)

@@ -43,12 +43,13 @@ function E:UpdateBlizzardFonts()
 	DAMAGE_TEXT_FONT   = COMBAT
 	STANDARD_TEXT_FONT = NORMAL
 
+	--CHANGES:Lanrutcon:Commented nil stuff, WoD/MoP global variables
 	if self.private.general.replaceBlizzFonts then
 		-- Base fonts
 		--SetFont(NumberFontNormal,					LSM:Fetch('font', 'ElvUI Pixel'), 10, 'MONOCHROMEOUTLINE', 1, 1, 1, 0, 0, 0)
 		SetFont(GameTooltipHeader,                  NORMAL, self.db.general.fontSize)
 		SetFont(NumberFont_OutlineThick_Mono_Small, NUMBER, self.db.general.fontSize, "OUTLINE")
-		SetFont(SystemFont_Shadow_Large_Outline,	NUMBER, 20, "OUTLINE")
+		--SetFont(SystemFont_Shadow_Large_Outline,	NUMBER, 20, "OUTLINE")
 		SetFont(NumberFont_Outline_Huge,            NUMBER, 28, MONOCHROME.."THICKOUTLINE", 28)
 		SetFont(NumberFont_Outline_Large,           NUMBER, 15, MONOCHROME.."OUTLINE")
 		SetFont(NumberFont_Outline_Med,             NUMBER, self.db.general.fontSize*1.1, "OUTLINE")

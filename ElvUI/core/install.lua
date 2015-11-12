@@ -149,9 +149,10 @@ local function SetupChat()
 	end
 end
 
+--CHANGES:Lanrutcon:Commented MoP/WoD stuff
 local function SetupCVars()
 	SetCVar("alternateResourceText", 1)
-	SetCVar("statusTextDisplay", "BOTH")
+	--SetCVar("statusTextDisplay", "BOTH")
 	SetCVar("ShowClassColorInNameplate", 1)
 	SetCVar("screenshotQuality", 10)
 	SetCVar("chatMouseScroll", 1)

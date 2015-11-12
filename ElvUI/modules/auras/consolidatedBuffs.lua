@@ -141,9 +141,11 @@ function A:CreateButton(i)
 	return button
 end
 
+--CHANGES:Lanrutcon:RegisterUnitEvent was unavailable in Cataclysm
 function A:EnableCB()
 	ElvUI_ConsolidatedBuffs:Show()
-	BuffFrame:RegisterUnitEvent('UNIT_AURA', "player")
+	--BuffFrame:RegisterUnitEvent('UNIT_AURA', "player")
+	BuffFrame:RegisterEvent('UNIT_AURA')
 	self:RegisterEvent("UNIT_AURA", 'UpdateReminder')
 	self:RegisterEvent("GROUP_ROSTER_UPDATE", 'UpdateReminder');
 	self:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", 'UpdateReminder');
@@ -154,7 +156,8 @@ end
 function A:DisableCB()
 	ElvUI_ConsolidatedBuffs:Hide()
 	if(not E.private.auras.disableBlizzard) then
-		BuffFrame:RegisterUnitEvent('UNIT_AURA', "player")
+		--BuffFrame:RegisterUnitEvent('UNIT_AURA', "player")
+		BuffFrame:RegisterEvent('UNIT_AURA')
 	else
 		BuffFrame:UnregisterEvent('UNIT_AURA')
 	end
@@ -178,6 +181,9 @@ function A:Update_ConsolidatedBuffsSettings(isCallback)
 		end
 	end
 
+	--CHANGES:Lanrutcon: NUM_LE_RAID_BUFF_TYPES is a global from MoP/WoD for the highest raid buff category
+	
+	NUM_LE_RAID_BUFF_TYPES = 0;
 	for i = 1, NUM_LE_RAID_BUFF_TYPES do
 		local button = frame[i]
 		button.t:SetAlpha(1)

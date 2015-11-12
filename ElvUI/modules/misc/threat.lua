@@ -136,3 +136,24 @@ function THREAT:Initialize()
 end
 
 E:RegisterModule(THREAT:GetName())
+
+
+
+
+
+--------------------###MISSING FUNCTIONS####-------
+--CHANGES:Lanrutcon
+
+function IsInRaid()
+	if(GetNumRaidMembers() > 0) then
+		return true
+	end
+	return false;
+end
+
+function IsInGroup()
+	if(GetNumRaidMembers() == 0 and GetNumPartyMembers() > 0) then
+		return true
+	end
+	return false;
+end

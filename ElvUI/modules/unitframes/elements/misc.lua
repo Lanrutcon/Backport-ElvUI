@@ -11,6 +11,43 @@ local LSM = LibStub("LibSharedMedia-3.0");
 
 --missing functions
 
+-----------------TIMER------------
+--CHANGES:Lanrutcon
+
+
+C_Timer = {};
+local waitTable = {};
+local waitFrame = nil;
+
+function C_Timer.After(delay, func, ...)
+  if(type(delay)~="number" or type(func)~="function") then
+    return false;
+  end
+  if(waitFrame == nil) then
+    waitFrame = CreateFrame("Frame","WaitFrame", UIParent);
+    waitFrame:SetScript("onUpdate",function (self,elapse)
+      local count = #waitTable;
+      local i = 1;
+      while(i<=count) do
+        local waitRecord = tremove(waitTable,i);
+        local d = tremove(waitRecord,1);
+        local f = tremove(waitRecord,1);
+        local p = tremove(waitRecord,1);
+        if(d>elapse) then
+          tinsert(waitTable,i,{d-elapse,f,p});
+          i = i + 1;
+        else
+          count = count - 1;
+          f(unpack(p));
+        end
+      end
+    end);
+  end
+  tinsert(waitTable,{delay,func,{...}});
+  return true;
+end
+
+
 function GetNumClasses()
 	return 10;
 end
@@ -30,6 +67,40 @@ local TableClassID = {
 		["Druid"]			= 10;
 }
 
+--CHANGES:Lanrutcon:From oQueue files
+local TableSpecID 	= { [398]  = { id =  1, n = "DK.Blood"        , spy = "Tank" },
+						[399]  = { id =  2, n = "DK.Frost"        , spy = "Melee" },
+						[400]  = { id =  3, n = "DK.Unholy"       , spy = "Melee" },
+						[752]  = { id =  4, n = "DR.Balance"      , spy = "Knockback" },
+						[750]  = { id =  5, n = "DR.Feral"        , spy = "FERALSPEC" },
+						[748]  = { id =  7, n = "DR.Restoration"  , spy = "Healer" },
+						[811]  = { id =  8, n = "HN.Beast"        , spy = "Knockback" },
+						[807]  = { id =  9, n = "HN.Marksmanship" , spy = "Ranged" },
+						[809]  = { id = 10, n = "HN.Survival"     , spy = "Ranged" },
+						[799]  = { id = 11, n = "MA.Arcane"       , spy = "Knockback" },
+						[851]  = { id = 12, n = "MA.Fire"         , spy = "Ranged" },
+						[823]  = { id = 13, n = "MA.Frost"        , spy = "Ranged" },
+						[831]  = { id = 17, n = "PA.Holy"         , spy = "Healer" },
+						[839]  = { id = 18, n = "PA.Protection"   , spy = "Tank" },
+						[855]  = { id = 19, n = "PA.Retribution"  , spy = "Melee" },
+						[760]  = { id = 20, n = "PR.Discipline"   , spy = "Healer" },
+						[813]  = { id = 21, n = "PR.Holy"         , spy = "Healer" },
+						[795]  = { id = 22, n = "PR.Shadow"       , spy = "Ranged" },
+						[182]  = { id = 23, n = "RO.Assassination", spy = "Melee" },
+						[181]  = { id = 24, n = "RO.Combat"       , spy = "Melee" },
+						[183]  = { id = 25, n = "RO.Subtlety"     , spy = "Melee" },					
+						[261]  = { id = 26, n = "SH.Elemental"    , spy = "Knockback" },
+						[263]  = { id = 27, n = "SH.Enhancement"  , spy = "Melee" },
+						[262]  = { id = 28, n = "SH.Restoration"  , spy = "Healer" },					
+						[871]  = { id = 29, n = "LK.Affliction"   , spy = "Knockback" },
+						[867]  = { id = 30, n = "LK.Demonology"   , spy = "Knockback" },
+						[865]  = { id = 31, n = "LK.Destruction"  , spy = "Knockback" },			
+						[746]  = { id = 32, n = "WA.Arms"         , spy = "Melee" },
+						[815]  = { id = 33, n = "WA.Fury"         , spy = "Melee" },
+						[845]  = { id = 34, n = "WA.Protection"   , spy = "Tank" },
+						[  0]  = { id =  0, n = "Lowbie"          , spy = "Melee" },
+                  } ;
+
 function GetClassInfo(index)
 	local classDisplayName, classTag = UnitClass("player");
 	return classDisplayName, classTag, TableClassID[classDisplayName];
@@ -42,7 +113,12 @@ function GetNumSpecializationsForClassID(classID)
 end
 
 function GetSpecializationInfoForClassID(classID, specNum)
-	return GetTalentInfo
+	--id, name, description, icon, background, role = GetSpecializationInfoForClassID(classID, specNum)
+	--local id, name, description, iconTexture, pointsSpent, background, previewPointsSpent, isUnlocked = GetTalentTabInfo(tabIndex[, inspect[, isPet]][, talentGroup])
+	local id, name, description, iconTexture, pointsSpent, background, previewPointsSpent, isUnlocked = GetTalentTabInfo(specNum);
+	local role = TableSpecID[id].spy;
+	return id, name, description, icon, background, role;
+	
 end
 ------------------
 
@@ -610,15 +686,19 @@ local roleIconTextures = {
 }
 
 --From http://forums.wowace.com/showpost.php?p=325677&postcount=5
+--CHANGES:Lanrutcon:It seems WoW doesn't have all the data right away - making a timer (1sec)
 local specNameToRole = {}
-for i = 1, GetNumClasses() do
-	local _, class, classID = GetClassInfo(i)
-	specNameToRole[class] = {}
-	for j = 1, GetNumSpecializationsForClassID(classID) do
-		local _, spec, _, _, _, role = GetSpecializationInfoForClassID(classID, j)
-		specNameToRole[class][spec] = role
+local function init()
+	for i = 1, GetNumClasses() do
+		local _, class, classID = GetClassInfo(i)
+		specNameToRole[class] = {}
+		for j = 1, GetNumSpecializationsForClassID(classID) do
+			local _, spec, _, _, _, role = GetSpecializationInfoForClassID(classID, j)
+			specNameToRole[class][spec] = role
+		end
 	end
 end
+C_Timer.After(1, init)
 
 local function GetBattleFieldIndexFromUnitName(name)
 	local nameFromIndex
@@ -723,6 +803,9 @@ function UF:Construct_RoleIcon(frame)
 
 	return tex
 end
+
+
+
 
 
 

@@ -177,7 +177,8 @@ f:SetScript("OnEvent", CheckSpec)
 
 oUF:AddElement('DebuffHighlight', Update, Enable, Disable)
 
---Missing functions--
+------------------#####Missing functions#####----------------
+--CHANGES:Lanrutcon
 
 function GetActiveSpecGroup()
 	return GetPrimaryTalentTree()
@@ -194,7 +195,10 @@ function GetSpecializationInfo(index)
 end
 
 function GetSpecializationInfoByID(id)
---GetTalentTabInfo(i)
-local id, name, description, icon, background, role, class = GetSpecializationInfoByID(id)
-return id, name, description, icon, background, role, class
+	print(id);
+	local id, name, description, icon, _, background = GetTalentTabInfo(id)
+	local class = UnitClass("player");
+	local role;
+
+	return id, name, description, icon, background, role, class;
 end
