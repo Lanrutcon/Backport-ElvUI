@@ -6,8 +6,10 @@ ObjectiveFrameHolder:SetWidth(130)
 ObjectiveFrameHolder:SetHeight(22)
 ObjectiveFrameHolder:SetPoint('TOPRIGHT', E.UIParent, 'TOPRIGHT', -135, -300)
 
+--CHANGES:Lanrutcon:WoD Stuff
 function B:ObjectiveFrameHeight()
-	ObjectiveTrackerFrame:Height(E.db.general.objectiveFrameHeight)
+	return;
+	--ObjectiveTrackerFrame:Height(E.db.general.objectiveFrameHeight)
 end
 
 local function IsFramePositionedLeft(frame)

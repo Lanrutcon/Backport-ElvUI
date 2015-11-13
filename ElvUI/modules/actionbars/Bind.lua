@@ -236,7 +236,7 @@ function AB:BindUpdate(button, spellmacro)
 end
 
 function AB:RegisterButton(b, override)
-	local stance = StanceButton1:GetScript("OnClick");
+	local stance = ShapeshiftButton1:GetScript("OnClick");
 	local pet = PetActionButton1:GetScript("OnClick");
 	local button = SecureActionButton_OnClick;
 	if b.IsProtected and b.GetObjectType and b.GetScript and b:GetObjectType()=="CheckButton" and b:IsProtected() then
@@ -304,6 +304,7 @@ function AB:ChangeBindingProfile()
 end
 
 function AB:LoadKeyBinder()
+
 	bind:SetFrameStrata("DIALOG");
 	bind:SetFrameLevel(99)
 	bind:EnableMouse(true);
@@ -313,7 +314,7 @@ function AB:LoadKeyBinder()
 	bind.texture:SetAllPoints(bind);
 	bind.texture:SetTexture(0, 0, 0, .25);
 	bind:Hide();
-
+	
 	self:HookScript(GameTooltip, "OnUpdate", "Tooltip_OnUpdate");
 	hooksecurefunc(GameTooltip, "Hide", function(tooltip) for _, tt in pairs(tooltip.shoppingTooltips) do tt:Hide(); end end);
 
@@ -322,13 +323,13 @@ function AB:LoadKeyBinder()
 	bind:SetScript("OnKeyUp", function(_, key) self:BindListener(key) end);
 	bind:SetScript("OnMouseUp", function(_, key) self:BindListener(key) end);
 	bind:SetScript("OnMouseWheel", function(_, delta) if delta>0 then self:BindListener("MOUSEWHEELUP") else self:BindListener("MOUSEWHEELDOWN"); end end);
-
+	
 	local b = EnumerateFrames();
+	
 	while b do
 		self:RegisterButton(b);
 		b = EnumerateFrames(b);
 	end
-
 	for i=1, 12 do
 		local b = _G["SpellButton"..i];
 		b:HookScript("OnEnter", function(b) AB:BindUpdate(b, "SPELL"); end);

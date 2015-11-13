@@ -28,11 +28,6 @@ function AB:SetupExtraButton()
 	ExtraActionBarFrame:SetParent(holder)
 	ExtraActionBarFrame:ClearAllPoints()
 	ExtraActionBarFrame:SetPoint('CENTER', holder, 'CENTER')
-	--DraenorZoneAbilityFrame:SetParent(holder)
-	--DraenorZoneAbilityFrame:ClearAllPoints()
-	--DraenorZoneAbilityFrame:SetPoint('CENTER', holder, 'CENTER')
-
-	--DraenorZoneAbilityFrame.ignoreFramePositionManager = true
 	ExtraActionBarFrame.ignoreFramePositionManager  = true
 
 	
@@ -65,7 +60,6 @@ function AB:SetupExtraButton()
 	end
 	
 	AB:Extra_SetAlpha()
-	print("################################################");
 	E:CreateMover(holder, 'BossButton', L["Boss Button"], nil, nil, nil, 'ALL,ACTIONBARS');
 end
 

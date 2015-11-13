@@ -164,7 +164,7 @@ function lib:CreateButton(id, name, header, config)
 	if not KeyBound then
 		KeyBound = LibStub("LibKeyBound-1.0", true)
 	end
-
+	
 	local button = setmetatable(CreateFrame("CheckButton", name, header, "SecureActionButtonTemplate, ActionButtonTemplate"), Generic_MT)
 	button:RegisterForDrag("LeftButton", "RightButton")
 	button:RegisterForClicks("AnyUp")
@@ -174,6 +174,7 @@ function lib:CreateButton(id, name, header, config)
 	button:SetScript("OnLeave", Generic.OnLeave)
 	button:SetScript("PreClick", Generic.PreClick)
 	button:SetScript("PostClick", Generic.PostClick)
+
 
 	button.id = id
 	button.header = header
@@ -189,14 +190,19 @@ function lib:CreateButton(id, name, header, config)
 
 	SetupSecureSnippets(button)
 	WrapOnClick(button)
-
+	
+	button.HotKey = button:CreateFontString("ButtonHotkey", "OVERLAY", "GameFontNormal")
 	-- adjust hotkey style for better readability
 	button.HotKey:SetFont(button.HotKey:GetFont(), 13, "OUTLINE")
 	button.HotKey:SetVertexColor(0.75, 0.75, 0.75)
-
 	-- adjust count/stack size
+	button.Count = button:CreateFontString("ButtonCount", "OVERLAY", "GameFontNormal")
 	button.Count:SetFont(button.Count:GetFont(), 16, "OUTLINE")
 
+	button.Border = button:CreateTexture("ButtonBorder", "BORDER");
+	button.Name = button:CreateFontString("ButtonName", "OVERLAY", "GameFontNormal")
+	button.NormalTexture = button:CreateTexture("ButtonNormalTexture", "BACKGROUND")
+	
 	-- Store the button in the registry, needed for event and OnUpdate handling
 	if not next(ButtonRegistry) then
 		InitializeEventHandler()
@@ -204,7 +210,7 @@ function lib:CreateButton(id, name, header, config)
 	ButtonRegistry[button] = true
 
 	button:UpdateConfig(config)
-
+	
 	-- run an initial update
 	button:UpdateAction()
 	UpdateHotkeys(button)
@@ -213,7 +219,6 @@ function lib:CreateButton(id, name, header, config)
 	button.action = 0
 
 	lib.callbacks:Fire("OnButtonCreated", button)
-
 	return button
 end
 
@@ -653,10 +658,12 @@ function Generic:UpdateConfig(config)
 	if config and type(config) ~= "table" then
 		error("LibActionButton-1.0: UpdateConfig requires a valid configuration!", 2)
 	end
+	
 	local oldconfig = self.config
 	if not self.config then self.config = {} end
 	-- merge the two configs
 	merge(self.config, config, DefaultConfig)
+	
 
 	if self.config.outOfRangeColoring == "button" or (oldconfig and oldconfig.outOfRangeColoring == "button") then
 		UpdateUsable(self)
@@ -666,7 +673,8 @@ function Generic:UpdateConfig(config)
 	elseif oldconfig and oldconfig.outOfRangeColoring == "hotkey" then
 		self.HotKey:SetVertexColor(0.75, 0.75, 0.75)
 	end
-
+	
+	
 	if self.config.hideElements.macro then
 		self.Name:Hide()
 	else
@@ -674,7 +682,7 @@ function Generic:UpdateConfig(config)
 	end
 
 	self:SetAttribute("flyoutDirection", self.config.flyoutDirection)
-
+		
 	UpdateHotkeys(self)
 	UpdateGrid(self)
 	Update(self)
@@ -1264,7 +1272,7 @@ local function StartChargeCooldown(parent, chargeStart, chargeDuration)
 		parent.chargeCooldown = cooldown
 		cooldown.parent = parent
 	end
-	parent.chargeCooldown:SetDrawBling(parent.chargeCooldown:GetEffectiveAlpha() > 0.5)
+	--parent.chargeCooldown:SetDrawBling(parent.chargeCooldown:GetEffectiveAlpha() > 0.5)
 	parent.chargeCooldown:SetCooldown(chargeStart, chargeDuration)
 	if not chargeStart or chargeStart == 0 then
 		EndChargeCooldown(parent.chargeCooldown)
@@ -1281,7 +1289,7 @@ function UpdateCooldown(self)
 	local start, duration, enable = self:GetCooldown()
 	local charges, maxCharges, chargeStart, chargeDuration = self:GetCharges()
 
-	self.cooldown:SetDrawBling(self.cooldown:GetEffectiveAlpha() > 0.5)
+	--self.cooldown:SetDrawBling(self.cooldown:GetEffectiveAlpha() > 0.5)
 
 	if (locStart + locDuration) > (start + duration) then
 		if self.cooldown.currentCooldownType ~= COOLDOWN_TYPE_LOSS_OF_CONTROL then
@@ -1320,7 +1328,7 @@ end
 
 function StopFlash(self)
 	self.flashing = 0
-	self.Flash:Hide()
+	--self.Flash:Hide()		--CHANGES:Lanrutcon:Commented for the time being
 	UpdateButtonState(self)
 end
 
@@ -1346,6 +1354,7 @@ function UpdateTooltip(self)
 end
 
 function UpdateHotkeys(self)
+	
 	local key = self:GetHotkey()
 	if not key or key == "" or self.config.hideElements.hotkey then
 		self.HotKey:SetText(RANGE_INDICATOR)
@@ -1356,10 +1365,10 @@ function UpdateHotkeys(self)
 		self.HotKey:SetPoint("TOPLEFT", self, "TOPLEFT", - 2, - 2)
 		self.HotKey:Show()
 	end
-
 	if self.postKeybind then
 		self.postKeybind(nil, self)
 	end
+	
 end
 
 function ShowOverlayGlow(self)
@@ -1497,7 +1506,7 @@ Generic.GetLossOfControlCooldown = function(self) return 0, 0 end
 Action.HasAction               = function(self) return HasAction(self._state_action) end
 Action.GetActionText           = function(self) return GetActionText(self._state_action) end
 Action.GetTexture              = function(self) return GetActionTexture(self._state_action) end
-Action.GetCharges              = function(self) return GetActionCharges(self._state_action) end
+--Action.GetCharges              = function(self) return GetActionCharges(self._state_action) end
 Action.GetCount                = function(self) return GetActionCount(self._state_action) end
 Action.GetCooldown             = function(self) return GetActionCooldown(self._state_action) end
 Action.IsAttack                = function(self) return IsAttackAction(self._state_action) end
@@ -1505,7 +1514,7 @@ Action.IsEquipped              = function(self) return IsEquippedAction(self._st
 Action.IsCurrentlyActive       = function(self) return IsCurrentAction(self._state_action) end
 Action.IsAutoRepeat            = function(self) return IsAutoRepeatAction(self._state_action) end
 Action.IsUsable                = function(self) return IsUsableAction(self._state_action) end
-Action.IsConsumableOrStackable = function(self) return IsConsumableAction(self._state_action) or IsStackableAction(self._state_action) or (not IsItemAction(self._state_action) and GetActionCount(self._state_action) > 0) end
+Action.IsConsumableOrStackable = function(self) return IsConsumableAction(self._state_action) or IsStackableAction(self._state_action) --[[or (not IsItemAction(self._state_action) and GetActionCount(self._state_action) > 0) ]] end
 Action.IsUnitInRange           = function(self, unit) return IsActionInRange(self._state_action, unit) end
 Action.SetTooltip              = function(self) return GameTooltip:SetAction(self._state_action) end
 Action.GetSpellId              = function(self)
@@ -1517,7 +1526,7 @@ Action.GetSpellId              = function(self)
 		return spellId
 	end
 end
-Action.GetLossOfControlCooldown = function(self) return GetActionLossOfControlCooldown(self._state_action) end
+
 
 -----------------------------------------------------------
 --- Spell Button

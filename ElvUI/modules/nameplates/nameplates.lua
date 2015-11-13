@@ -962,26 +962,34 @@ function NP:UpdateSettings()
 end
 
 function NP:CreatePlate(frame)
-	frame.healthBar = frame.ArtContainer.HealthBar
-	-- frame.healthBar.texture = frame.healthBar:GetRegions() --No parentKey, yet?
+	local f = {};
+	f.healthBar, f.castBar = frame:GetChildren();
+	f.threat, f.border, f.castBar.shield, f.castBar.border, f.castBar.icon, f.highlight, f.name, f.level, f.bossIcon, f.raidIcon, f.eliteIcon = frame:GetRegions();
+	local threat, hpborder, overlay, oldname, oldlevel, bossicon, raidicon, elite = frame:GetRegions()
+	local _, cbborder, cbshield, cbicon = cb:GetRegions()
+	
+	frame.healthBar = f.healthBar
+	--frame.healthBar.texture = f.barFrame.healthbar.texture
 
 	-- frame.absorbBar = frame.ArtContainer.AbsorbBar
-	frame.border = frame.ArtContainer.Border
-	frame.highlight = frame.ArtContainer.Highlight
-	frame.level = frame.ArtContainer.LevelText
-	frame.raidIcon = frame.ArtContainer.RaidTargetIcon
-	frame.eliteIcon = frame.ArtContainer.EliteIcon
-	frame.threat = frame.ArtContainer.AggroWarningTexture
-	frame.bossIcon = frame.ArtContainer.HighLevelIcon
-	frame.name = frame.NameContainer.NameText
+	frame.border = f.border
+	frame.highlight = f.highlight
+	frame.level = f.level
+	frame.raidIcon = f.raidIcon or frame:CreateTexture(nil, 'ARTWORK');
+	frame.eliteIcon = f.eliteIcon
+	frame.threat = f.threat
+	frame.bossIcon = f.bossIcon
+	frame.name =  f.name
 	
-	frame.castBar = frame.ArtContainer.CastBar
-	-- frame.castBar.texture = frame.castBar:GetRegions() --No parentKey, yet?
-	frame.castBar.border = frame.ArtContainer.CastBarBorder
-	frame.castBar.icon = frame.ArtContainer.CastBarSpellIcon
-	frame.castBar.shield = frame.ArtContainer.CastBarFrameShield
-	frame.castBar.name = frame.ArtContainer.CastBarText
-	frame.castBar.shadow = frame.ArtContainer.CastBarTextBG
+	frame.castBar = f.castBar
+
+	--frame.castBar.texture = f.barFrame.castbar.texture --No parentKey, yet?
+	frame.castBar.border = f.castBar.border
+	frame.castBar.icon = f.castBar.icon
+	frame.castBar.shield = f.castBar.shield
+	--frame.castBar.name = frame.ArtContainer.CastBarText
+	--frame.castBar.shadow = frame.ArtContainer.CastBarTextBG
+
 
 	local myPlate = CreateFrame("Frame", nil, self.PlateParent)
 	if(self.viewPort) then
@@ -1038,13 +1046,15 @@ function NP:CreatePlate(frame)
 	myPlate.name:SetJustifyH("LEFT")
 
 	--Raid Icon
+	--if(frame.raidIcon) then
 	frame.raidIcon:SetAlpha(0)
 	-- DO NOT REUSE BLIZZARD's, make our own!
 	myPlate.raidIcon = myPlate:CreateTexture(nil, 'ARTWORK')
 	myPlate.raidIcon:SetSize(frame.raidIcon:GetSize())
 	myPlate.raidIcon:SetTexture([[Interface\TargetingFrame\UI-RaidTargetingIcons]])
 	myPlate.raidIcon:Hide()
-
+	--end
+	
 	--Healer Icon
 	myPlate.healerIcon = myPlate:CreateTexture(nil, 'ARTWORK')
 	myPlate.healerIcon:SetSize(frame.raidIcon:GetSize())
@@ -1129,7 +1139,7 @@ function NP:CreatePlate(frame)
 	NP:QueueObject(frame, frame.border)
 	NP:QueueObject(frame, frame.castBar.shield)
 	NP:QueueObject(frame, frame.castBar.border)
-	NP:QueueObject(frame, frame.castBar.shadow)
+	--NP:QueueObject(frame, frame.castBar.shadow)
 	NP:QueueObject(frame, frame.bossIcon)
 	NP:QueueObject(frame, frame.eliteIcon)
 	NP:QueueObject(frame, frame.castBar.name)

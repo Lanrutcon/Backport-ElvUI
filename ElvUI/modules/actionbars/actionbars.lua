@@ -94,7 +94,6 @@ function AB:PositionAndSizeBar(barName)
 	local heightMult = self.db[barName].heightMult;
 	--CHANGES:Lanrutcon:handledbars table is nil, changing to bardefaults
 	local bar = self["handledBars"][barName]
-	--local bar = self["barDefaults"][barName]
 
 	bar.db = self.db[barName]
 	bar.db.position = nil; --Depreciated
@@ -247,7 +246,6 @@ function AB:PositionAndSizeBar(barName)
 end
 
 function AB:CreateBar(id)
-	print("creating bars");
 	local bar = CreateFrame('Frame', 'ElvUI_Bar'..id, E.UIParent, 'SecureHandlerStateTemplate');
 	local point, anchor, attachTo, x, y = split(',', self['barDefaults']['bar'..id].position)
 	bar:Point(point, anchor, attachTo, x, y)
@@ -257,7 +255,7 @@ function AB:CreateBar(id)
 	bar.backdrop:SetAllPoints();
 	bar.buttons = {}
 	bar.bindButtons = self['barDefaults']['bar'..id].bindButtons
-
+	
 	for i=1, 12 do
 		bar.buttons[i] = LAB:CreateButton(i, format(bar:GetName().."Button%d", i), bar, nil)
 		bar.buttons[i]:SetState(0, "action", i)
@@ -273,6 +271,7 @@ function AB:CreateBar(id)
 			bar.buttons[i]:AddToMasque(MasqueGroup)
 		end
 	end
+	
 	self:UpdateButtonConfig(bar, bar.bindButtons)
 
 	if AB['barDefaults']['bar'..id].conditions:find("[form]") then
@@ -281,11 +280,12 @@ function AB:CreateBar(id)
 		bar:SetAttribute("hasTempBar", false)
 	end
 
-	bar:SetAttribute("_onstate-page", [[
-		if HasTempShapeshiftActionBar() and self:GetAttribute("hasTempBar") then
-			newstate = GetTempShapeshiftBarIndex() or newstate
-		end
+--		if HasTempShapeshiftActionBar() and self:GetAttribute("hasTempBar") then
+--			newstate = GetTempShapeshiftBarIndex() or newstate
+--		end
 
+	
+	bar:SetAttribute("_onstate-page", [[
 		if newstate ~= 0 then
 			self:SetAttribute("state", newstate)
 			control:ChildUpdate("state", newstate)
@@ -943,22 +943,19 @@ function AB:Initialize()
 
 	self:DisableBlizzard()
 	self:SetupExtraButton()
-	print("################################################");
 	self:SetupMicroBar()
-	print("################################################");
 	self:UpdateBar1Paging()
 	
 	
 
 	for i=1, 6 do
-		
 		self:CreateBar(i)
 	end
 	self:CreateBarPet()
 	self:CreateBarShapeShift()
 	self:CreateVehicleLeave()
-
 	self:UpdateButtonSettings()
+	
 
 	self:LoadKeyBinder()
 	self:RegisterEvent("UPDATE_BINDINGS", "ReassignBindings")
@@ -966,13 +963,14 @@ function AB:Initialize()
 	--self:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
 	self:RegisterEvent('UPDATE_VEHICLE_ACTIONBAR', 'VehicleFix')
 	self:RegisterEvent('UPDATE_OVERRIDE_ACTIONBAR', 'VehicleFix')
-
+	
 
 	if not GetCVarBool('lockActionBars') then
 		SetCVar('lockActionBars', 1)
 	end
 
 	SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
+
 end
 
 E:RegisterModule(AB:GetName())

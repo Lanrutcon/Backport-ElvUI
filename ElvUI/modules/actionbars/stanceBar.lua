@@ -55,7 +55,7 @@ function AB:StyleShapeShift(event)
 				end
 				
 				if isActive then
-					StanceBarFrame.lastSelected = button:GetID();
+					ShapeshiftBarFrame.lastSelected = button:GetID();
 					if numForms == 1 then
 						button.checked:SetTexture(1, 1, 1, 0.5)
 						button:SetChecked(true);
@@ -97,8 +97,8 @@ end
 
 function AB:PositionAndSizeBarShapeShift()
 	local spacing = E:Scale(self.db['stanceBar'].buttonspacing);
-	local buttonsPerRow = self.db['stanceBar'].buttonsPerRow;
-	local numButtons = self.db['stanceBar'].buttons;
+	local buttonsPerRow = self.db['stanceBar'].buttonsPerRow or 0;
+	local numButtons = self.db['stanceBar'].buttons or 0;
 	local size = E:Scale(self.db['stanceBar'].buttonsize);
 	local point = self.db['stanceBar'].point;
 	local widthMult = self.db['stanceBar'].widthMult;
@@ -251,14 +251,16 @@ function AB:AdjustMaxStanceButtons(event)
 	local numButtons = GetNumShapeshiftForms()
 	for i = 1, NUM_STANCE_SLOTS do
 		if not bar.buttons[i] then
-			bar.buttons[i] = CreateFrame("CheckButton", format(bar:GetName().."Button%d", i), bar, "StanceButtonTemplate")
+			bar.buttons[i] = CreateFrame("CheckButton", format(bar:GetName().."Button%d", i), bar, "ShapeshiftButtonTemplate")
+			
 			bar.buttons[i]:SetID(i)
 			if MasqueGroup and E.private.actionbar.masque.stanceBar then
 				MasqueGroup:AddButton(bar.buttons[i])
 			end
 			initialCreate = true;
+			
 		end
-
+	
 		if ( i <= numButtons ) then
 			bar.buttons[i]:Show();
 			bar.LastButton = i;
@@ -266,22 +268,13 @@ function AB:AdjustMaxStanceButtons(event)
 			bar.buttons[i]:Hide();
 		end
 	end
-
+	
 	self:PositionAndSizeBarShapeShift();
-
+	
 	if event == 'UPDATE_SHAPESHIFT_FORMS' then
 		self:StyleShapeShift()
 	end
-
-	if not C_PetBattles.IsInBattle() or initialCreate then
-		if numButtons == 0 then
-			UnregisterStateDriver(bar, "show");
-			bar:Hide()
-		else
-			bar:Show()
-			RegisterStateDriver(bar, "show", '[petbattle] hide;show');
-		end
-	end
+	
 end
 
 --CHANGES:Lanrutcon:Adding global variable
@@ -311,7 +304,7 @@ function AB:CreateBarShapeShift()
 			self:Show();
 		end
 	]]);
-
+	
 	self:RegisterEvent('UPDATE_SHAPESHIFT_FORMS', 'AdjustMaxStanceButtons');
 	self:RegisterEvent('UPDATE_SHAPESHIFT_COOLDOWN');
 	self:RegisterEvent('UPDATE_SHAPESHIFT_USABLE', 'StyleShapeShift');
@@ -322,5 +315,5 @@ function AB:CreateBarShapeShift()
 	self:AdjustMaxStanceButtons();
 	self:PositionAndSizeBarShapeShift();
 	self:StyleShapeShift();
-	--self:UpdateStanceBindings()
+	self:UpdateStanceBindings()
 end
