@@ -959,8 +959,6 @@ function AB:Initialize()
 
 	self:LoadKeyBinder()
 	self:RegisterEvent("UPDATE_BINDINGS", "ReassignBindings")
-	--self:RegisterEvent("PET_BATTLE_CLOSE", "ReassignBindings")
-	--self:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
 	self:RegisterEvent('UPDATE_VEHICLE_ACTIONBAR', 'VehicleFix')
 	self:RegisterEvent('UPDATE_OVERRIDE_ACTIONBAR', 'VehicleFix')
 	

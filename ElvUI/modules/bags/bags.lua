@@ -262,13 +262,13 @@ function B:UpdateSlot(bagID, slotID)
 		slot:SetBackdropBorderColor(unpack(E.media.bordercolor));
 	end
 
-	if(C_NewItems.IsNewItem(bagID, slotID)) then
-		slot.shadow:Show()
-		E:Flash(slot.shadow, 1, true)
-	else
+	--if(C_NewItems.IsNewItem(bagID, slotID)) then
+	--	slot.shadow:Show()
+	--	E:Flash(slot.shadow, 1, true)
+	--else
 		slot.shadow:Hide()
 		E:StopFlash(slot.shadow)
-	end
+	--end
 	
 	if (texture) then
 		local start, duration, enable = GetContainerItemCooldown(bagID, slotID)
@@ -400,9 +400,10 @@ function B:Layout(isBank)
 					f.ContainerHolder[i] = CreateFrame("CheckButton", "ElvUIMainBag" .. bagID .. "Slot", f.ContainerHolder, "BagSlotButtonTemplate")
 				end
 
+				tprint(f.ContainerHolder[i])
 				f.ContainerHolder[i]:SetTemplate('Default', true)
 				f.ContainerHolder[i]:StyleButton()
-				f.ContainerHolder[i].IconBorder:SetAlpha(0)
+				--f.ContainerHolder[i].IconBorder:SetAlpha(0)	--CHANGES:Lanrutcon:some icons don't have iconborder, and it seems that after commenting, it doesn't make any difference. Still gonna check afterwards
 				f.ContainerHolder[i]:SetNormalTexture("")
 				f.ContainerHolder[i]:SetCheckedTexture(nil)
 				f.ContainerHolder[i]:SetPushedTexture("")
@@ -474,11 +475,11 @@ function B:Layout(isBank)
 					if(_G[f.Bags[bagID][slotID]:GetName()..'NewItemTexture']) then
 						_G[f.Bags[bagID][slotID]:GetName()..'NewItemTexture']:Hide()
 					end
-
-					f.Bags[bagID][slotID].Count:ClearAllPoints();
-					f.Bags[bagID][slotID].Count:Point('BOTTOMRIGHT', 0, 2);
-					f.Bags[bagID][slotID].Count:FontTemplate(E.LSM:Fetch("font", E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)
-					f.Bags[bagID][slotID].Count:SetTextColor(countColor.r, countColor.g, countColor.b)
+					--tprint(f.Bags[bagID][slotID]);
+					f.Bags[bagID][slotID].count:ClearAllPoints();
+					f.Bags[bagID][slotID].count:Point('BOTTOMRIGHT', 0, 2);
+					f.Bags[bagID][slotID].count:FontTemplate(E.LSM:Fetch("font", E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)
+					f.Bags[bagID][slotID].count:SetTextColor(countColor.r, countColor.g, countColor.b)
 
 					if not(f.Bags[bagID][slotID].questIcon) then
 						f.Bags[bagID][slotID].questIcon = _G[f.Bags[bagID][slotID]:GetName()..'IconQuestTexture'] or _G[f.Bags[bagID][slotID]:GetName()].IconQuestTexture
@@ -862,6 +863,7 @@ function B:VendorGrayCheck()
 end
 
 function B:ContructContainerFrame(name, isBank)
+
 	local f = CreateFrame('Button', name, E.UIParent);
 	f:SetTemplate('Transparent');
 	f:SetFrameStrata('DIALOG');
@@ -891,6 +893,7 @@ function B:ContructContainerFrame(name, isBank)
 
 		GameTooltip:Show()
 	end)
+
 	f:SetScript('OnLeave', function(self) GameTooltip:Hide() end)
 	f.isBank = isBank
 
@@ -916,7 +919,7 @@ function B:ContructContainerFrame(name, isBank)
 	f.ContainerHolder:SetTemplate('Transparent')
 	f.ContainerHolder:Hide()
 	local buttonColor = E.PixelMode and {0.31, 0.31, 0.31} or E.media.bordercolor
-
+	print("#############################");
 	if isBank then
 		f.reagentFrame = CreateFrame("Frame", "ElvUIReagentBankFrame", f);
 		f.reagentFrame:Point('TOP', f, 'TOP', 0, -f.topOffset);
@@ -1007,7 +1010,7 @@ function B:ContructContainerFrame(name, isBank)
 		f.sortButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
 		f.sortButton:GetPushedTexture():SetInside()
 		f.sortButton:StyleButton(nil, true)
-		f.sortButton:SetScript("OnEnter", BagItemAutoSortButton:GetScript("OnEnter"))
+		--f.sortButton:SetScript("OnEnter", BagItemAutoSortButton:GetScript("OnEnter"))			--CHANGES:Lanrutcon:Check what it does that "OnEnter" script, maybe a tooltip?
 		f.sortButton:SetScript('OnClick', function()
 			if f.holderFrame:IsShown() then
 				B:CommandDecorator(B.SortBags, 'bank')();
@@ -1110,14 +1113,14 @@ function B:ContructContainerFrame(name, isBank)
 		f.editBox.searchIcon:SetTexture("Interface\\Common\\UI-Searchbox-Icon")
 		f.editBox.searchIcon:SetPoint("LEFT", f.editBox.backdrop, "LEFT", E.Border + 1, -1)
 		f.editBox.searchIcon:SetSize(15, 15)
-
+	
 	else
+		
 		--Gold Text
 		f.goldText = f:CreateFontString(nil, 'OVERLAY')
 		f.goldText:FontTemplate()
 		f.goldText:Point('BOTTOMRIGHT', f.holderFrame, 'TOPRIGHT', -2, 4)
 		f.goldText:SetJustifyH("RIGHT")
-
 
 		--Sort Button
 		f.sortButton = CreateFrame("Button", name..'SortButton', f);
@@ -1131,9 +1134,8 @@ function B:ContructContainerFrame(name, isBank)
 		f.sortButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
 		f.sortButton:GetPushedTexture():SetInside()
 		f.sortButton:StyleButton(nil, true)
-		f.sortButton:SetScript("OnEnter", BagItemAutoSortButton:GetScript("OnEnter"))
+		--f.sortButton:SetScript("OnEnter", BagItemAutoSortButton:GetScript("OnEnter"))		--CHANGES:Lanrutcon:Check what it does that "OnEnter" script, maybe a tooltip?
 		f.sortButton:SetScript('OnClick', function() B:CommandDecorator(B.SortBags, 'bags')(); end)
-
 
 		--Bags Button
 		f.bagsButton = CreateFrame("Button", name..'BagsButton', f);
