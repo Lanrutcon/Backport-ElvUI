@@ -13,7 +13,8 @@
 	<Script file='garrison.lua'/>
 	<Script file='tradeskill.lua'/>
 	<Script file='raid.lua'/>
-	<Script file='petbattle.lua'/>
+	<!--CHANGES:Lanrutcon:MoP stuff
+	<Script file='petbattle.lua'/>-->
 	<Script file='talent.lua'/>
 	<Script file='collectables.lua'/>
 	<Script file='glyph.lua'/>

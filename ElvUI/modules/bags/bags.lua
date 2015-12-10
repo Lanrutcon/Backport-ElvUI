@@ -400,7 +400,6 @@ function B:Layout(isBank)
 					f.ContainerHolder[i] = CreateFrame("CheckButton", "ElvUIMainBag" .. bagID .. "Slot", f.ContainerHolder, "BagSlotButtonTemplate")
 				end
 
-				tprint(f.ContainerHolder[i])
 				f.ContainerHolder[i]:SetTemplate('Default', true)
 				f.ContainerHolder[i]:StyleButton()
 				--f.ContainerHolder[i].IconBorder:SetAlpha(0)	--CHANGES:Lanrutcon:some icons don't have iconborder, and it seems that after commenting, it doesn't make any difference. Still gonna check afterwards
@@ -475,7 +474,6 @@ function B:Layout(isBank)
 					if(_G[f.Bags[bagID][slotID]:GetName()..'NewItemTexture']) then
 						_G[f.Bags[bagID][slotID]:GetName()..'NewItemTexture']:Hide()
 					end
-					--tprint(f.Bags[bagID][slotID]);
 					f.Bags[bagID][slotID].count:ClearAllPoints();
 					f.Bags[bagID][slotID].count:Point('BOTTOMRIGHT', 0, 2);
 					f.Bags[bagID][slotID].count:FontTemplate(E.LSM:Fetch("font", E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)

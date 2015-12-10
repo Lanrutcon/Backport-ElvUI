@@ -285,11 +285,12 @@ E.Options.args.skins = {
 					name = L["BG Map"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				petbattleui = {
-					type = "toggle",
-					name = L["Pet Battle"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
+				--CHANGES:Lanrutcon:Commented MoP Stuff
+				--petbattleui = {
+				--	type = "toggle",
+				--	name = L["Pet Battle"],
+				--	desc = L["TOGGLESKIN_DESC"],
+				--},
 				losscontrol = {
 					type = "toggle",
 					name = L["Loss Control"],

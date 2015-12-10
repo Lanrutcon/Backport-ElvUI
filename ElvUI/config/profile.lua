@@ -2146,7 +2146,8 @@ P["actionbar"] = {
 			["MONK"] = "[bonusbar:1] 7; [bonusbar:2] 8; [bonusbar:3] 9;",
 			["WARRIOR"] = "[bonusbar:1] 7; [bonusbar:2] 8;"
 		},
-		['visibility'] = "[petbattle] hide; show",
+		--CHANGES:Lanrutcon:MoP stuff
+		--['visibility'] = "[petbattle] hide; show",
 	},
 	['bar2'] = {
 		['enabled'] = false,
@@ -2161,7 +2162,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar3'] = {
 		['enabled'] = true,
@@ -2176,7 +2177,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar4'] = {
 		['enabled'] = true,
@@ -2191,7 +2192,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar5'] = {
 		['enabled'] = true,
@@ -2206,7 +2207,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar6'] = {
 		['enabled'] = false,
@@ -2221,7 +2222,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['barPet'] = {
 		['enabled'] = true,
@@ -2235,7 +2236,7 @@ P["actionbar"] = {
 		["buttonsize"] = 32,
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
-		['visibility'] = "[petbattle] hide;[pet,novehicleui,nooverridebar,nopossessbar] show;hide",
+		['visibility'] = "[pet,novehicleui,nooverridebar,nopossessbar] show;hide",
 	},
 	['stanceBar'] = {
 		['enabled'] = true,

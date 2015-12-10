@@ -192,7 +192,8 @@ local BLIZZARD_ADDONS = {
     "Blizzard_MacroUI",
     "Blizzard_MovePad",
     "Blizzard_ObjectiveTracker",
-    "Blizzard_PetBattleUI",
+	--CHANGES:Lanrutcon:MoP stuff
+    --"Blizzard_PetBattleUI",
     "Blizzard_PetJournal",
     "Blizzard_PVPUI",
     "Blizzard_QuestChoice",

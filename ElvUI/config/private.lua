@@ -107,7 +107,8 @@ V['skins'] = {
 		["stable"] = true,
 		["bgmap"] = true,
 		['mounts'] = true,
-		['petbattleui'] = true,
+		--CHANGES:Lanrutcon:MoP stuff
+		--['petbattleui'] = true,
 		['losscontrol'] = true,
 		['itemUpgrade'] = true,
 	},

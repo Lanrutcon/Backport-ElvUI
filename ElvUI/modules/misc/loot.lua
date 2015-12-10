@@ -12,7 +12,7 @@ local tinsert = table.insert
 local sq, ss, sn
 local OnEnter = function(self)
 	local slot = self:GetID()
-	if(LootSlotHasItem(slot)) then
+	if(LootSlotIsItem(slot)) then
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetLootItem(slot)
 		CursorUpdate(self)

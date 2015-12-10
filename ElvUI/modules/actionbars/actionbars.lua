@@ -92,7 +92,6 @@ function AB:PositionAndSizeBar(barName)
 	local numColumns = ceil(numButtons / buttonsPerRow);
 	local widthMult = self.db[barName].widthMult;
 	local heightMult = self.db[barName].heightMult;
-	--CHANGES:Lanrutcon:handledbars table is nil, changing to bardefaults
 	local bar = self["handledBars"][barName]
 
 	bar.db = self.db[barName]
@@ -966,9 +965,9 @@ function AB:Initialize()
 	if not GetCVarBool('lockActionBars') then
 		SetCVar('lockActionBars', 1)
 	end
-
+	
 	SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
-
+	
 end
 
 E:RegisterModule(AB:GetName())

@@ -1105,7 +1105,9 @@ function UF:Initialize()
 	E.UnitFrames = UF;
 
 	local ElvUF_Parent = CreateFrame('Frame', 'ElvUF_Parent', E.UIParent, 'SecureHandlerStateTemplate');
-	RegisterStateDriver(ElvUF_Parent, "visibility", "[petbattle] hide; show")
+	
+	--CHANGES:Lanrutcon:MoP stuff
+	--RegisterStateDriver(ElvUF_Parent, "visibility", "[petbattle] hide; show")
 
 	self:UpdateColors()
 	ElvUF:RegisterStyle('ElvUF', function(frame, unit)

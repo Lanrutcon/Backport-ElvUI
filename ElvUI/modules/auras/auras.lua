@@ -307,7 +307,8 @@ function A:CreateAuraHeader(filter)
 	header:SetClampedToScreen(true)
 	header:SetAttribute("unit", "player")
 	header:SetAttribute("filter", filter)
-	RegisterStateDriver(header, "visibility", "[petbattle] hide; show")
+	--CHANGES:Lanrutcon:MoP stuff
+	--RegisterStateDriver(header, "visibility", "[petbattle] hide; show")
 	RegisterAttributeDriver(header, "unit", "[vehicleui] vehicle; player")
 
 	if filter == "HELPFUL" then

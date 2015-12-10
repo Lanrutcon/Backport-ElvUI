@@ -71,7 +71,9 @@ local __buttons = {}
 --end
 
 function AB:UpdateMicroPositionDimensions()
+	
 	if not ElvUI_MicroBar then return; end
+	
 	local numRows = 1
 	local prevButton = ElvUI_MicroBar
 	for i=1, (#MICRO_BUTTONS - 1) do
@@ -102,7 +104,7 @@ function AB:UpdateMicroPositionDimensions()
 	else
 		ElvUI_MicroBar:SetAlpha(self.db.microbar.alpha)
 	end
-
+	print("MicrobarTest");
 	ElvUI_MicroBar:SetWidth((((CharacterMicroButton:GetWidth() - 0.5) * (#MICRO_BUTTONS - 2)) - 3) / numRows)
 	ElvUI_MicroBar:Height((CharacterMicroButton:GetHeight() - 27) * numRows)
 
