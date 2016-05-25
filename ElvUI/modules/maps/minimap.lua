@@ -244,41 +244,13 @@ function M:UpdateSettings()
 			GameTimeFrame:Show()
 		end
 	end
-
-	if MiniMapMailFrame then
-		local pos = E.db.general.minimap.icons.mail.position or "TOPRIGHT"
-		local scale = E.db.general.minimap.icons.mail.scale or 1
-		MiniMapMailFrame:ClearAllPoints()
-		MiniMapMailFrame:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.mail.xOffset or 3, E.db.general.minimap.icons.mail.yOffset or 4)
-		MiniMapMailFrame:SetScale(scale)
-	end
-
-	if QueueStatusMinimapButton then
-		local pos = E.db.general.minimap.icons.lfgEye.position or "BOTTOMRIGHT"
-		local scale = E.db.general.minimap.icons.lfgEye.scale or 1
-		QueueStatusMinimapButton:ClearAllPoints()
-		QueueStatusMinimapButton:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.lfgEye.xOffset or 3, E.db.general.minimap.icons.lfgEye.yOffset or 0)
-		QueueStatusMinimapButton:SetScale(scale)
-		QueueStatusFrame:SetScale(1/scale)
-	end
-
-	if MiniMapInstanceDifficulty and GuildInstanceDifficulty then
-		local pos = E.db.general.minimap.icons.difficulty.position or "TOPLEFT"
-		local scale = E.db.general.minimap.icons.difficulty.scale or 1
-		local x = E.db.general.minimap.icons.difficulty.xOffset or 0
-		local y = E.db.general.minimap.icons.difficulty.yOffset or 0
-		MiniMapInstanceDifficulty:ClearAllPoints()
-		MiniMapInstanceDifficulty:SetPoint(pos, Minimap, pos, x, y)
-		MiniMapInstanceDifficulty:SetScale(scale)
-		GuildInstanceDifficulty:ClearAllPoints()
-		GuildInstanceDifficulty:SetPoint(pos, Minimap, pos, x, y)
-		GuildInstanceDifficulty:SetScale(scale)
-	end
 end
 
 function M:Initialize()
 	menuFrame:SetTemplate("Transparent", true)
+
 	self:UpdateSettings()
+
 	if not E.private.general.minimap.enable then
 		Minimap:SetMaskTexture('Textures\\MinimapMask')
 		return;
@@ -328,7 +300,19 @@ function M:Initialize()
 	MiniMapTracking:Hide()
 	MiniMapWorldMapButton:Kill()
 
-	MiniMapInstanceDifficulty:SetParent(Minimap)
+	MiniMapMailFrame:ClearAllPoints();
+	MiniMapMailFrame:Point('TOPRIGHT', Minimap, 3, 4);
+	MiniMapMailBorder:Hide();
+	MiniMapMailIcon:SetTexture('Interface\\AddOns\\ElvUI\\media\\textures\\mail');
+
+	MiniMapBattlefieldFrame:ClearAllPoints();
+	MiniMapBattlefieldFrame:Point('BOTTOMRIGHT', Minimap, 3, 0);
+	MiniMapBattlefieldBorder:Hide();
+
+	MiniMapInstanceDifficulty:ClearAllPoints();
+	MiniMapInstanceDifficulty:SetParent(Minimap);
+	MiniMapInstanceDifficulty:Point('TOPLEFT', Minimap, 'TOPLEFT', 0, 0);
+
 	GuildInstanceDifficulty:SetParent(Minimap)
 
 	if TimeManagerClockButton then
@@ -340,6 +324,10 @@ function M:Initialize()
 	Minimap:EnableMouseWheel(true)
 	Minimap:SetScript("OnMouseWheel", M.Minimap_OnMouseWheel)
 	Minimap:SetScript("OnMouseUp", M.Minimap_OnMouseUp)
+
+	MiniMapLFGFrame:ClearAllPoints();
+	MiniMapLFGFrame:Point('BOTTOMRIGHT', Minimap, 'BOTTOMRIGHT', 2, 1);
+	MiniMapLFGFrameBorder:Hide();
 
 	self:RegisterEvent("PLAYER_ENTERING_WORLD", "Update_ZoneText")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "Update_ZoneText")
