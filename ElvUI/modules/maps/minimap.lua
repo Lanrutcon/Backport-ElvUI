@@ -245,6 +245,23 @@ function M:UpdateSettings()
 		end
 	end
 
+	if MiniMapMailFrame then
+		local pos = E.db.general.minimap.icons.mail.position or "TOPRIGHT"
+		local scale = E.db.general.minimap.icons.mail.scale or 1
+		MiniMapMailFrame:ClearAllPoints()
+		MiniMapMailFrame:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.mail.xOffset or 3, E.db.general.minimap.icons.mail.yOffset or 4)
+		MiniMapMailFrame:SetScale(scale)
+	end
+
+	if QueueStatusMinimapButton then
+		local pos = E.db.general.minimap.icons.lfgEye.position or "BOTTOMRIGHT"
+		local scale = E.db.general.minimap.icons.lfgEye.scale or 1
+		QueueStatusMinimapButton:ClearAllPoints()
+		QueueStatusMinimapButton:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.lfgEye.xOffset or 3, E.db.general.minimap.icons.lfgEye.yOffset or 0)
+		QueueStatusMinimapButton:SetScale(scale)
+		QueueStatusFrame:SetScale(1/scale)
+	end
+
 	if MiniMapInstanceDifficulty and GuildInstanceDifficulty then
 		local pos = E.db.general.minimap.icons.difficulty.position or "TOPLEFT"
 		local scale = E.db.general.minimap.icons.difficulty.scale or 1
