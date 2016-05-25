@@ -176,6 +176,64 @@ function M:UpdateSettings()
 			RightMiniPanel:Hide()
 		end
 	end
+	
+	if(LeftMiniPanel and RightMiniPanel) then
+		if(E.db.datatexts.minimapPanels and E.private.general.minimap.enable) then
+			LeftMiniPanel:Show();
+			RightMiniPanel:Show();
+		else
+			LeftMiniPanel:Hide();
+			RightMiniPanel:Hide();
+		end
+	end
+	
+	if(BottomMiniPanel) then
+		if(E.db.datatexts.minimapBottom and E.private.general.minimap.enable) then
+			BottomMiniPanel:Show();
+		else
+			BottomMiniPanel:Hide();
+		end
+	end
+	
+	if(BottomLeftMiniPanel) then
+		if(E.db.datatexts.minimapBottomLeft and E.private.general.minimap.enable) then
+			BottomLeftMiniPanel:Show();
+		else
+			BottomLeftMiniPanel:Hide();
+		end
+	end
+	
+	if(BottomRightMiniPanel) then
+		if(E.db.datatexts.minimapBottomRight and E.private.general.minimap.enable) then
+			BottomRightMiniPanel:Show();
+		else
+			BottomRightMiniPanel:Hide();
+		end
+	end
+	
+	if(TopMiniPanel) then
+		if(E.db.datatexts.minimapTop and E.private.general.minimap.enable) then
+			TopMiniPanel:Show();
+		else
+			TopMiniPanel:Hide();
+		end
+	end
+	
+	if(TopLeftMiniPanel) then
+		if(E.db.datatexts.minimapTopLeft and E.private.general.minimap.enable) then
+			TopLeftMiniPanel:Show();
+		else
+			TopLeftMiniPanel:Hide();
+		end
+	end
+	
+	if(TopRightMiniPanel) then
+		if(E.db.datatexts.minimapTopRight and E.private.general.minimap.enable) then
+			TopRightMiniPanel:Show();
+		else
+			TopRightMiniPanel:Hide();
+		end
+	end
 
 	if MMHolder then
 		MMHolder:Width((Minimap:GetWidth() + (E.PixelMode and 2 or 4)) + E.ConsolidatedBuffsWidth)
