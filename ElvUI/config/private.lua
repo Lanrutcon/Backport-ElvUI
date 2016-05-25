@@ -83,6 +83,7 @@ V['skins'] = {
 		['macro'] = true,
 		['mail'] = true,
 		['merchant'] = true,
+		['mirrorTimers'] = true,
 		['misc'] = true,
 		['petition'] = true,
 		['pvp'] = true,

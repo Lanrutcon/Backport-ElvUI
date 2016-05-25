@@ -279,6 +279,11 @@ args = {
 					name = L["Void Storage"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
+				mirrorTimers = {
+					type = "toggle",
+					name = L["Mirror Timers"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
 			},
 		},
 	},
