@@ -159,6 +159,8 @@ local function LoadSkin()
 		S:HandleIcon(item.icon)
 		item.icon:SetDrawLayer("OVERLAY")
 
+		item:SetTemplate("Default");
+
 		if i == 1 then
 			item:ClearAllPoints()
 			item:Point("TOPLEFT", EncounterInfo.lootScroll.scrollChild, "TOPLEFT", 5, 0)
