@@ -1,134 +1,157 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
-
-local function StyleScrollFrame(scrollFrame, widthOverride, heightOverride, inset)
-	scrollFrame:SetTemplate()
-	scrollFrame.spellTex = scrollFrame:CreateTexture(nil, 'ARTWORK')
-	scrollFrame.spellTex:SetTexture([[Interface\QuestFrame\QuestBG]])
-	if inset then
-		scrollFrame.spellTex:SetPoint("TOPLEFT", 2, -2)
-	else
-		scrollFrame.spellTex:SetPoint("TOPLEFT")
-	end
-	scrollFrame.spellTex:Size(widthOverride or 506, heightOverride or 615)
-	scrollFrame.spellTex:SetTexCoord(0, 1, 0.02, 1)
-end
+local E, L, V, P, G = unpack(select(2, ...));
+local S = E:GetModule("Skins")
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.quest ~= true then return end
+
+	S:HandleCloseButton(QuestLogFrameCloseButton)
+	S:HandleScrollBar(QuestLogDetailScrollFrameScrollBar)
+	S:HandleScrollBar(QuestLogScrollFrameScrollBar, 5)
 	S:HandleScrollBar(QuestProgressScrollFrameScrollBar)
 	S:HandleScrollBar(QuestRewardScrollFrameScrollBar)
 
+	QuestLogFrame:StripTextures()
+	QuestLogFrame:SetTemplate("Transparent")
+	QuestLogCount:StripTextures()
+	QuestLogCount:SetTemplate("Default")
 
-	S:HandleScrollBar(QuestDetailScrollFrameScrollBar)
-	QuestProgressScrollFrame:StripTextures()
+	for i = 1, MAX_NUM_ITEMS do
+		_G["QuestInfoItem" .. i]:StripTextures();
+		_G["QuestInfoItem" .. i]:StyleButton();
+		_G["QuestInfoItem" .. i]:Width(_G["QuestInfoItem" .. i]:GetWidth() - 4);
+		_G["QuestInfoItem" .. i]:SetFrameLevel(_G["QuestInfoItem" .. i]:GetFrameLevel() + 2);
+		_G["QuestInfoItem" .. i .. "IconTexture"]:SetTexCoord(unpack(E.TexCoords));
+		_G["QuestInfoItem" .. i .. "IconTexture"]:SetDrawLayer("OVERLAY");
+		_G["QuestInfoItem" .. i .. "IconTexture"]:Size(_G["QuestInfoItem" .. i .. "IconTexture"]:GetWidth() -(E.Spacing*2), _G["QuestInfoItem" .. i .. "IconTexture"]:GetHeight() -(E.Spacing*2));
+		_G["QuestInfoItem" .. i .. "IconTexture"]:Point("TOPLEFT", E.Border, -E.Border);
+		S:HandleIcon(_G["QuestInfoItem" .. i .. "IconTexture"]);
+		_G["QuestInfoItem" .. i]:SetTemplate("Default");
+		_G["QuestInfoItem" .. i .. "Count"]:SetParent(_G["QuestInfoItem" .. i].backdrop);
+		_G["QuestInfoItem" .. i .. "Count"]:SetDrawLayer("OVERLAY");
+	end
 
-	QuestGreetingScrollFrame:StripTextures()
-	S:HandleScrollBar(QuestGreetingScrollFrameScrollBar)
-
-
-	QuestInfoSkillPointFrame:StripTextures()
-	QuestInfoSkillPointFrame:StyleButton()
-	QuestInfoSkillPointFrame:Width(QuestInfoSkillPointFrame:GetWidth() - 4)
-	QuestInfoSkillPointFrame:SetFrameLevel(QuestInfoSkillPointFrame:GetFrameLevel() + 2)
-	QuestInfoSkillPointFrameIconTexture:SetTexCoord(unpack(E.TexCoords))
-	QuestInfoSkillPointFrameIconTexture:SetDrawLayer("OVERLAY")
-	QuestInfoSkillPointFrameIconTexture:Point("TOPLEFT", 2, -2)
-	QuestInfoSkillPointFrameIconTexture:Size(QuestInfoSkillPointFrameIconTexture:GetWidth() - 2, QuestInfoSkillPointFrameIconTexture:GetHeight() - 2)
-	QuestInfoSkillPointFrame:SetTemplate("Default")
-	QuestInfoSkillPointFrameCount:SetDrawLayer("OVERLAY")
-
-	QuestInfoItemHighlight:StripTextures()
-	QuestInfoItemHighlight:SetTemplate("Default", nil, true)
-	QuestInfoItemHighlight:SetBackdropBorderColor(1, 1, 0)
-	QuestInfoItemHighlight:SetBackdropColor(0, 0, 0, 0)
-	QuestInfoItemHighlight.backdropTexture:SetAlpha(0)
-	QuestInfoItemHighlight:Size(142, 40)
+	QuestInfoItemHighlight:StripTextures();
+	QuestInfoItemHighlight:SetTemplate("Default", nil, true);
+	QuestInfoItemHighlight:SetBackdropBorderColor(1, 1, 0);
+	QuestInfoItemHighlight:SetBackdropColor(0, 0, 0, 0);
+	QuestInfoItemHighlight:Size(142, 40);
 
 	hooksecurefunc("QuestInfoItem_OnClick", function(self)
-		QuestInfoItemHighlight:ClearAllPoints()
-		QuestInfoItemHighlight:SetOutside(self.Icon)
+		QuestInfoItemHighlight:ClearAllPoints();
+		QuestInfoItemHighlight:SetOutside(self:GetName() .. "IconTexture");
+		_G[self:GetName() .. "Name"]:SetTextColor(1, 1, 0);
 
-		self.Name:SetTextColor(1, 1, 0)
-
-		local parent = self:GetParent()
-		for i=1, #parent.RewardButtons do
-			local questItem = QuestInfoRewardsFrame.RewardButtons[i]
+		for i = 1, MAX_NUM_ITEMS do
+			local questItem = _G["QuestInfoItem" .. i];
 			if(questItem ~= self) then
-				questItem.Name:SetTextColor(1, 1, 1)
+				_G[questItem:GetName() .. "Name"]:SetTextColor(1, 1, 1);
 			end
 		end
+	end);
+
+	EmptyQuestLogFrame:StripTextures()
+	
+	S:HandleScrollBar(QuestDetailScrollFrameScrollBar)
+
+	QuestLogFrameShowMapButton:StripTextures()
+	S:HandleButton(QuestLogFrameShowMapButton)
+	QuestLogFrameShowMapButton.text:ClearAllPoints()
+	QuestLogFrameShowMapButton.text:SetPoint("CENTER")
+	QuestLogFrameShowMapButton:Size(QuestLogFrameShowMapButton:GetWidth() - 30, QuestLogFrameShowMapButton:GetHeight(), - 40)
+
+	S:HandleButton(QuestLogFrameAbandonButton)
+	S:HandleButton(QuestLogFramePushQuestButton)
+	S:HandleButton(QuestLogFrameTrackButton)
+	S:HandleButton(QuestLogFrameCancelButton)
+
+	QuestLogFramePushQuestButton:Point("LEFT", QuestLogFrameAbandonButton, "RIGHT", 2, 0)
+	QuestLogFramePushQuestButton:Point("RIGHT", QuestLogFrameTrackButton, "LEFT", -2, 0)
+
+	--Everything here to make the text a readable color
+	local function QuestObjectiveText()
+		local numObjectives = GetNumQuestLeaderBoards()
+		local objective
+		local type, finished
+		local numVisibleObjectives = 0
+		for i = 1, numObjectives do
+			_, type, finished = GetQuestLogLeaderBoard(i)
+			if (type ~= "spell") then
+				numVisibleObjectives = numVisibleObjectives+1
+				objective = _G["QuestInfoObjective"..numVisibleObjectives]
+				if ( finished ) then
+					objective:SetTextColor(1, 1, 0)
+				else
+					objective:SetTextColor(0.6, 0.6, 0.6)
+				end
+			end
+		end			
+	end
+	
+	hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material)								
+		local textColor = {1, 1, 1}
+		local titleTextColor = {1, 1, 0}
+		
+		-- headers
+		QuestInfoTitleHeader:SetTextColor(unpack(titleTextColor))
+		QuestInfoDescriptionHeader:SetTextColor(unpack(titleTextColor))
+		QuestInfoObjectivesHeader:SetTextColor(unpack(titleTextColor))
+		QuestInfoRewardsHeader:SetTextColor(unpack(titleTextColor))
+		-- other text
+		QuestInfoDescriptionText:SetTextColor(unpack(textColor))
+		QuestInfoObjectivesText:SetTextColor(unpack(textColor))
+		QuestInfoGroupSize:SetTextColor(unpack(textColor))
+		QuestInfoRewardText:SetTextColor(unpack(textColor))
+		-- reward frame text
+		QuestInfoItemChooseText:SetTextColor(unpack(textColor))
+		QuestInfoItemReceiveText:SetTextColor(unpack(textColor))
+		QuestInfoSpellLearnText:SetTextColor(unpack(textColor))
+		QuestInfoXPFrameReceiveText:SetTextColor(unpack(textColor))	
+		
+		QuestObjectiveText()
 	end)
-
-	QuestRewardScrollFrame:HookScript('OnShow', function(self)
-		if not self.backdrop then
-			self:CreateBackdrop("Default")
-			StyleScrollFrame(self, 509, 630, false)
-			self:Height(self:GetHeight() - 2)
-		end
-		self.spellTex:Height(self:GetHeight() + 217)
-	end)
-
-	hooksecurefunc("QuestInfo_Display", function(template, parentFrame)
-	  for i = 1, #QuestInfoRewardsFrame.RewardButtons do
-		local questItem = QuestInfoRewardsFrame.RewardButtons[i]
-		if not questItem:IsShown() then break end
-
-		local point, relativeTo, relativePoint, x, y = questItem:GetPoint()
-		if point and relativeTo and relativePoint then
-			if i == 1 then
-			    questItem:Point(point, relativeTo, relativePoint, 0, y)
-			elseif relativePoint == "BOTTOMLEFT" then
-			    questItem:Point(point, relativeTo, relativePoint, 0, -4)
+	
+	hooksecurefunc("QuestInfo_ShowRequiredMoney", function()
+		local requiredMoney = GetQuestLogRequiredMoney()
+		if ( requiredMoney > 0 ) then
+			if ( requiredMoney > GetMoney() ) then
+				-- Not enough money
+				QuestInfoRequiredMoneyText:SetTextColor(0.6, 0.6, 0.6)
 			else
-			    questItem:Point(point, relativeTo, relativePoint, 4, 0)
+				QuestInfoRequiredMoneyText:SetTextColor(1, 1, 0)
 			end
+		end			
+	end)		
+	
+	QuestLogFrame:HookScript("OnShow", function()
+		QuestLogScrollFrame:Height(331)
+		QuestLogDetailScrollFrame:Height(328)
+		
+		if not QuestLogDetailScrollFrame.backdrop then
+			QuestLogScrollFrame:SetTemplate("Default")
+			QuestLogDetailScrollFrame:CreateBackdrop("Default")
 		end
-
-		questItem.Name:SetTextColor(1, 1, 1)
-	  end
-    end)
-
-    hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
-    	local rewardButton = rewardsFrame.RewardButtons[index];
-    	if(not rewardButton.skinned) then
-    		rewardButton.NameFrame:Hide()
-    		rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
-    		rewardButton:CreateBackdrop("Default")
-    		rewardButton.backdrop:SetOutside(rewardButton.Icon)
-    		rewardButton.Icon:SetDrawLayer("OVERLAY")
-    		rewardButton.Count:SetDrawLayer("OVERLAY")
-    	end
-    end)
-
+	end)
 
 	--Quest Frame
 	QuestFrame:StripTextures(true)
-	QuestFrameInset:Kill()
+	QuestFrame:SetWidth(374)
 	QuestFrameDetailPanel:StripTextures(true)
 	QuestDetailScrollFrame:StripTextures(true)
-	QuestDetailScrollFrame:SetTemplate()
-	StyleScrollFrame(QuestDetailScrollFrame, 506, 615, true)
-
-	QuestProgressScrollFrame:SetTemplate()
-	StyleScrollFrame(QuestProgressScrollFrame, 506, 615, true)
-
-	QuestGreetingScrollFrame:SetTemplate()
-	StyleScrollFrame(QuestGreetingScrollFrame, 506, 615, true)
-
 	QuestDetailScrollChildFrame:StripTextures(true)
 	QuestRewardScrollFrame:StripTextures(true)
 	QuestRewardScrollChildFrame:StripTextures(true)
 	QuestFrameProgressPanel:StripTextures(true)
 	QuestFrameRewardPanel:StripTextures(true)
 	QuestFrame:CreateBackdrop("Transparent")
+	QuestFrame.backdrop:Point("TOPLEFT", 6, -8)
+	QuestFrame.backdrop:Point("BOTTOMRIGHT", -20, 65)
 	S:HandleButton(QuestFrameAcceptButton, true)
 	S:HandleButton(QuestFrameDeclineButton, true)
 	S:HandleButton(QuestFrameCompleteButton, true)
 	S:HandleButton(QuestFrameGoodbyeButton, true)
 	S:HandleButton(QuestFrameCompleteQuestButton, true)
 	S:HandleCloseButton(QuestFrameCloseButton, QuestFrame.backdrop)
-
+	
 	for i=1, 6 do
 		local button = _G["QuestProgressItem"..i]
 		local texture = _G["QuestProgressItem"..i.."IconTexture"]
@@ -141,50 +164,31 @@ local function LoadSkin()
 		texture:Point("TOPLEFT", 2, -2)
 		texture:Size(texture:GetWidth() - 2, texture:GetHeight() - 2)
 		_G["QuestProgressItem"..i.."Count"]:SetDrawLayer("OVERLAY")
-		button:SetTemplate("Default")
+		button:SetTemplate("Default")				
 	end
-
+	
+	hooksecurefunc("QuestFrameProgressItems_Update", function()
+		QuestProgressTitleText:SetTextColor(1, 1, 0)
+		QuestProgressText:SetTextColor(1, 1, 1)
+		QuestProgressRequiredItemsText:SetTextColor(1, 1, 0)
+		QuestProgressRequiredMoneyText:SetTextColor(1, 1, 0)
+	end)
+	
 	QuestNPCModel:StripTextures()
 	QuestNPCModel:CreateBackdrop("Transparent")
 	QuestNPCModel:Point("TOPLEFT", QuestLogDetailFrame, "TOPRIGHT", 4, -34)
 	QuestNPCModelTextFrame:StripTextures()
 	QuestNPCModelTextFrame:CreateBackdrop("Default")
 	QuestNPCModelTextFrame.backdrop:Point("TOPLEFT", QuestNPCModel.backdrop, "BOTTOMLEFT", 0, -2)
-	--QuestLogDetailFrame:StripTextures()
-	--QuestLogDetailFrame:SetTemplate("Transparent")
-	--QuestLogDetailScrollFrame:StripTextures()
-	--S:HandleCloseButton(QuestLogDetailFrameCloseButton)
-
+	QuestLogDetailFrame:StripTextures()
+	QuestLogDetailFrame:SetTemplate("Transparent")
+	QuestLogDetailScrollFrame:StripTextures()
+	S:HandleCloseButton(QuestLogDetailFrameCloseButton)
+	
 	hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, portrait, text, name, x, y)
 		QuestNPCModel:ClearAllPoints();
-		QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x + 18, y);
-	end)
-
-	QuestLogPopupDetailFrame:StripTextures()
-	QuestLogPopupDetailFrameInset:StripTextures()
-	S:HandleButton(QuestLogPopupDetailFrameAbandonButton)
-	S:HandleButton(QuestLogPopupDetailFrameShareButton)
-	S:HandleButton(QuestLogPopupDetailFrameTrackButton)
-	QuestLogPopupDetailFrameScrollFrame:StripTextures()
-	S:HandleScrollBar(QuestLogPopupDetailFrameScrollFrameScrollBar)
-	QuestLogPopupDetailFrame:SetTemplate("Transparent")
-
-	QuestLogPopupDetailFrameScrollFrame:HookScript('OnShow', function(self)
-		if not QuestLogPopupDetailFrameScrollFrame.backdrop then
-			QuestLogPopupDetailFrameScrollFrame:CreateBackdrop("Default")
-			StyleScrollFrame(QuestLogPopupDetailFrameScrollFrame, 509, 630, false)
-			QuestLogPopupDetailFrameScrollFrame:Height(self:GetHeight() - 2)
-		end
-		QuestLogPopupDetailFrameScrollFrame.spellTex:Height(self:GetHeight() + 217)
-	end)
-
-	S:HandleCloseButton(QuestLogPopupDetailFrameCloseButton)
-
-	QuestLogPopupDetailFrame.ShowMapButton:StripTextures()
-	S:HandleButton(QuestLogPopupDetailFrame.ShowMapButton)
-	QuestLogPopupDetailFrame.ShowMapButton.Text:ClearAllPoints()
-	QuestLogPopupDetailFrame.ShowMapButton.Text:SetPoint("CENTER")
-	QuestLogPopupDetailFrame.ShowMapButton:Size(QuestLogPopupDetailFrame.ShowMapButton:GetWidth() - 30, QuestLogPopupDetailFrame.ShowMapButton:GetHeight(), - 40)
+		QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x + 18, y);			
+	end)	
 end
 
-S:RegisterSkin('ElvUI', LoadSkin)
+S:RegisterSkin("ElvUI", LoadSkin);

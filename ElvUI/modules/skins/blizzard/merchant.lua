@@ -1,90 +1,138 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
+local E, L, V, P, G = unpack(select(2, ...));
+local S = E:GetModule("Skins");
 
 local function LoadSkin()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.merchant ~= true then return end
-	local frames = {
-		"MerchantBuyBackItem",
-		"MerchantFrame",
-	}
+	if(E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.merchant ~= true) then return; end
 
-	-- skin main frames
-	for i = 1, #frames do
-		_G[frames[i]]:StripTextures(true)
-		_G[frames[i]]:CreateBackdrop("Transparent")
-	end
+	MerchantFrame:StripTextures(true);
+	MerchantFrame:CreateBackdrop("Transparent");
+	MerchantFrame.backdrop:Point("TOPLEFT", 10, -11);
+	MerchantFrame.backdrop:Point("BOTTOMRIGHT", -28, 60);
 
-	MerchantExtraCurrencyInset:StripTextures()
-	MerchantExtraCurrencyBg:StripTextures()
-	MerchantFrameInset:StripTextures()
-	MerchantMoneyBg:StripTextures()
-	MerchantMoneyInset:StripTextures()
-	MerchantBuyBackItem.backdrop:Point("TOPLEFT", -6, 6)
-	MerchantBuyBackItem.backdrop:Point("BOTTOMRIGHT", 6, -6)
-	MerchantFrame.backdrop:Point("TOPLEFT", 6, 2)
-	MerchantFrame.backdrop:Point("BOTTOMRIGHT", 2, -1)
+	S:HandleCloseButton(MerchantFrameCloseButton, MerchantFrame.backdrop);
 
-	S:HandleDropDownBox(MerchantFrameLootFilter)
-
-	-- skin tabs
-	for i= 1, 2 do
-		S:HandleTab(_G["MerchantFrameTab"..i])
-	end
-
-	-- skin icons / merchant slots
 	for i = 1, 12 do
-		local b = _G["MerchantItem"..i.."ItemButton"]
-		local t = _G["MerchantItem"..i.."ItemButtonIconTexture"]
-		local item_bar = _G["MerchantItem"..i]
-		item_bar:StripTextures(true)
-		item_bar:CreateBackdrop("Default")
+		local item = _G["MerchantItem" .. i];
+		local itemButton = _G["MerchantItem" .. i .. "ItemButton"];
+		local iconTexture = _G["MerchantItem" .. i .. "ItemButtonIconTexture"];
 
-		b:StripTextures()
-		b:StyleButton(false)
-		b:SetTemplate("Default", true)
-		b:Point("TOPLEFT", item_bar, "TOPLEFT", 4, -4)
-		t:SetTexCoord(unpack(E.TexCoords))
-		t:SetInside()
+		item:StripTextures(true);
+		item:CreateBackdrop("Default");
 
-		_G["MerchantItem"..i.."MoneyFrame"]:ClearAllPoints()
-		_G["MerchantItem"..i.."MoneyFrame"]:Point("BOTTOMLEFT", b, "BOTTOMRIGHT", 3, 0)
+		itemButton:StripTextures();
+		itemButton:StyleButton();
+		itemButton:SetTemplate("Default", true);
+		itemButton:Point("TOPLEFT", item, "TOPLEFT", 4, -4);
 
+		iconTexture:SetTexCoord(unpack(E.TexCoords));
+		iconTexture:SetInside();
+
+		_G["MerchantItem" .. i .. "MoneyFrame"]:ClearAllPoints();
+		_G["MerchantItem" .. i .. "MoneyFrame"]:Point("BOTTOMLEFT", itemButton, "BOTTOMRIGHT", 3, 0);
 	end
 
-	-- Skin buyback item frame + icon
-	MerchantBuyBackItemItemButton:StripTextures()
-	MerchantBuyBackItemItemButton:StyleButton(false)
-	MerchantBuyBackItemItemButton:SetTemplate("Default", true)
-	MerchantBuyBackItemItemButtonIconTexture:SetTexCoord(unpack(E.TexCoords))
-	MerchantBuyBackItemItemButtonIconTexture:SetInside()
+	S:HandleNextPrevButton(MerchantNextPageButton);
+	S:HandleNextPrevButton(MerchantPrevPageButton);
 
-
-	MerchantRepairItemButton:StyleButton(false)
-	MerchantRepairItemButton:SetTemplate("Default", true)
-	for i=1, MerchantRepairItemButton:GetNumRegions() do
-		local region = select(i, MerchantRepairItemButton:GetRegions())
-
-		if region:GetObjectType() == "Texture" then
-			region:SetTexCoord(0.04, 0.24, 0.06, 0.5)
-			region:SetInside()
+	MerchantRepairItemButton:StyleButton();
+	MerchantRepairItemButton:SetTemplate("Default", true);
+	for i = 1, MerchantRepairItemButton:GetNumRegions() do
+		local region = select(i, MerchantRepairItemButton:GetRegions());
+		if(region:GetObjectType() == "Texture") then
+			region:SetTexCoord(0.04, 0.24, 0.06, 0.5);
+			region:SetInside();
 		end
 	end
 
-	MerchantGuildBankRepairButton:StyleButton()
-	MerchantGuildBankRepairButton:SetTemplate("Default", true)
-	MerchantGuildBankRepairButtonIcon:SetTexCoord(0.61, 0.82, 0.1, 0.52)
-	MerchantGuildBankRepairButtonIcon:SetInside()
+	MerchantRepairAllButton:StyleButton();
+	MerchantRepairAllButton:SetTemplate("Default", true);
+	MerchantRepairAllIcon:SetTexCoord(0.34, 0.1, 0.34, 0.535, 0.535, 0.1, 0.535, 0.535);
+	MerchantRepairAllIcon:SetInside();
 
-	MerchantRepairAllButton:StyleButton(false)
-	MerchantRepairAllButton:SetTemplate("Default", true)
-	MerchantRepairAllIcon:SetTexCoord(0.34, 0.1, 0.34, 0.535, 0.535, 0.1, 0.535, 0.535)
-	MerchantRepairAllIcon:SetInside()
+	MerchantGuildBankRepairButton:StyleButton();
+	MerchantGuildBankRepairButton:SetTemplate("Default", true);
+	MerchantGuildBankRepairButtonIcon:SetTexCoord(0.61, 0.82, 0.1, 0.52);
+	MerchantGuildBankRepairButtonIcon:SetInside();
 
-	-- Skin misc frames
-	MerchantFrame:Width(360)
-	S:HandleCloseButton(MerchantFrameCloseButton, MerchantFrame.backdrop)
-	S:HandleNextPrevButton(MerchantNextPageButton)
-	S:HandleNextPrevButton(MerchantPrevPageButton)
+	MerchantBuyBackItem:StripTextures(true);
+	MerchantBuyBackItem:CreateBackdrop("Transparent");
+	MerchantBuyBackItem.backdrop:Point("TOPLEFT", -6, 6);
+	MerchantBuyBackItem.backdrop:Point("BOTTOMRIGHT", 6, -6);
+
+	MerchantBuyBackItemItemButton:StripTextures();
+	MerchantBuyBackItemItemButton:StyleButton();
+	MerchantBuyBackItemItemButton:SetTemplate("Default", true);
+	MerchantBuyBackItemItemButtonIconTexture:SetTexCoord(unpack(E.TexCoords));
+	MerchantBuyBackItemItemButtonIconTexture:SetInside();
+
+	for i = 1, 2 do
+		S:HandleTab(_G["MerchantFrameTab" .. i]);
+	end
+
+	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", function()
+		local numMerchantItems = GetMerchantNumItems();
+		local index;
+		local itemButton, itemName;
+		local name, texture, price, quantity, numAvailable, isUsable, extendedCost;
+		for i = 1, BUYBACK_ITEMS_PER_PAGE do
+			index = (((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i);
+			itemButton = _G["MerchantItem" .. i .. "ItemButton"];
+			itemName = _G["MerchantItem" .. i .. "Name"];
+
+			if(index <= numMerchantItems) then
+				if(itemButton.link) then
+					local _, _, quality = GetItemInfo(itemButton.link);
+					local r, g, b = GetItemQualityColor(quality);
+
+					itemName:SetTextColor(r, g, b);
+					if(quality > 1) then
+						itemButton:SetBackdropBorderColor(r, g, b);
+					else
+						itemButton:SetBackdropBorderColor(unpack(E["media"].bordercolor));
+					end
+				end
+			end
+
+			local buybackName = GetBuybackItemInfo(GetNumBuybackItems());
+			if(buybackName) then
+				local _, _, quality = GetItemInfo(buybackName);
+				local r, g, b = GetItemQualityColor(quality);
+
+				MerchantBuyBackItemName:SetTextColor(r, g, b);
+				if(quality > 1) then
+					MerchantBuyBackItemItemButton:SetBackdropBorderColor(r, g, b);
+				else
+					MerchantBuyBackItemItemButton:SetBackdropBorderColor(unpack(E["media"].bordercolor));
+				end
+			else
+				MerchantBuyBackItemItemButton:SetBackdropBorderColor(unpack(E["media"].bordercolor));
+			end
+		end
+	end);
+
+	hooksecurefunc("MerchantFrame_UpdateBuybackInfo", function()
+		local numBuybackItems = GetNumBuybackItems();
+		local itemButton, itemName;
+		for i = 1, BUYBACK_ITEMS_PER_PAGE do
+			itemButton = _G["MerchantItem" .. i .. "ItemButton"];
+			itemName = _G["MerchantItem" .. i .. "Name"];
+
+			if(i <= numBuybackItems) then
+				local buybackName = GetBuybackItemInfo(i);
+				if(buybackName) then
+					local _, _, quality = GetItemInfo(buybackName);
+					local r, g, b = GetItemQualityColor(quality);
+
+					itemName:SetTextColor(r, g, b);
+					if(quality > 1) then
+						itemButton:SetBackdropBorderColor(r, g, b);
+					else
+						itemButton:SetBackdropBorderColor(unpack(E["media"].bordercolor));
+					end
+				end
+			end
+		end
+	end);
 end
 
-S:RegisterSkin('ElvUI', LoadSkin)
+S:RegisterSkin("ElvUI", LoadSkin);

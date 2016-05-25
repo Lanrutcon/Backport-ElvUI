@@ -1,11 +1,12 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...));
 local S = E:GetModule('Skins')
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.guildregistrar ~= true then return end
 	GuildRegistrarFrame:StripTextures(true)
-	GuildRegistrarFrame:SetTemplate("Transparent")
-	GuildRegistrarFrameInset:Kill()
+	GuildRegistrarFrame:CreateBackdrop("Transparent")
+	GuildRegistrarFrame.backdrop:Point("TOPLEFT", 12, -17)
+	GuildRegistrarFrame.backdrop:Point("BOTTOMRIGHT", -28, 65)
 	GuildRegistrarFrameEditBox:StripTextures()
 	GuildRegistrarGreetingFrame:StripTextures()
 	S:HandleButton(GuildRegistrarFrameGoodbyeButton)
@@ -21,13 +22,13 @@ local function LoadSkin()
 			end
 		end
 	end
-
+	
 	GuildRegistrarFrameEditBox:Height(20)
-
+	
 	for i=1, 2 do
 		_G["GuildRegistrarButton"..i]:GetFontString():SetTextColor(1, 1, 1)
 	end
-
+	
 	GuildRegistrarPurchaseText:SetTextColor(1, 1, 1)
 	AvailableServicesText:SetTextColor(1, 1, 0)
 end

@@ -33,56 +33,25 @@ E.Options.args.skins = {
 			set = function(info, value) E.private.skins.blizzard[ info[#info] ] = value; E:StaticPopup_Show("PRIVATE_RL") end,
 			disabled = function() return not E.private.skins.blizzard.enable end,
 			guiInline = true,
-			args = {
-				deathRecap = {
-					type = 'toggle',
-					name = L["Death Recap"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				--CHANGES:Lanrutcon:Removed WoD Stuff (Garrison)
-				bmah = {
-					type = 'toggle',
-					name = L["Black Market AH"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				transmogrify = {
-					type = 'toggle',
-					name = L["Transmogrify Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				encounterjournal = {
-					type = "toggle",
-					name = L["Encounter Journal"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				calendar = {
-					type = "toggle",
-					name = L["Calendar Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
+args = {
 				achievement = {
 					type = "toggle",
 					name = L["Achievement Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				lfguild = {
+				achievement_popup = {
 					type = "toggle",
-					name = L["LF Guild Frame"],
+					name = L["Achievement Popup Frames"],
+					desc = L["TOGGLESKIN_DESC"],								
+				},
+				arena = {
+					type = "toggle",
+					name = L["Arena Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				inspect = {
+				arenaregistrar = {
 					type = "toggle",
-					name = L["Inspect Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				binding = {
-					type = "toggle",
-					name = L["KeyBinding Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				gbank = {
-					type = "toggle",
-					name = L["Guild Bank"],
+					name = L["Arena Registrar"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				archaeology = {
@@ -90,39 +59,14 @@ E.Options.args.skins = {
 					name = L["Archaeology Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				guildcontrol = {
-					type = "toggle",
-					name = L["Guild Control Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				guild = {
-					type = "toggle",
-					name = L["Guild Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				tradeskill = {
-					type = "toggle",
-					name = L["TradeSkill Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				raid = {
-					type = "toggle",
-					name = L["Raid Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				talent = {
-					type = "toggle",
-					name = L["Talent Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
 				auctionhouse = {
 					type = "toggle",
 					name = L["Auction Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				timemanager = {
+				bags = {
 					type = "toggle",
-					name = L["Time Manager"],
+					name = L["Bags"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				barber = {
@@ -130,34 +74,9 @@ E.Options.args.skins = {
 					name = L["Barbershop Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				macro = {
+				bgmap = {
 					type = "toggle",
-					name = L["Macro Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				debug = {
-					type = "toggle",
-					name = L["Debug Tools"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				trainer = {
-					type = "toggle",
-					name = L["Trainer Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				socket = {
-					type = "toggle",
-					name = L["Socket Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				alertframes = {
-					type = "toggle",
-					name = L["Alert Frames"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				loot = {
-					type = "toggle",
-					name = L["Loot Frames"],
+					name = L["BG Map"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				bgscore = {
@@ -165,24 +84,44 @@ E.Options.args.skins = {
 					name = L["BG Score"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				merchant = {
+				binding = {
 					type = "toggle",
-					name = L["Merchant Frame"],
+					name = L["KeyBinding Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				mail = {
+				calendar = {
 					type = "toggle",
-					name = L["Mail Frame"],
+					name = L["Calendar Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				help = {
+				character = {
 					type = "toggle",
-					name = L["Help Frame"],
+					name = L["Character Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				trade = {
+				encounterjournal = {
 					type = "toggle",
-					name = L["Trade Frame"],
+					name = L["Encounter Journal"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				debug = {
+					type = "toggle",
+					name = L["Debug Tools"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				dressingroom = {
+					type = "toggle",
+					name = L["Dressing Room"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				friends = {
+					type = "toggle",
+					name = L["Friends"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				gbank = {
+					type = "toggle",
+					name = L["Guild Bank"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				gossip = {
@@ -195,64 +134,49 @@ E.Options.args.skins = {
 					name = L["Greeting Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				worldmap = {
+				guildregistrar = {
 					type = "toggle",
-					name = L["World Map"],
+					name = L["Guild Registrar"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				taxi = {
+				help = {
 					type = "toggle",
-					name = L["Taxi Frame"],
+					name = L["Help Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				lfg = {
+				inspect = {
 					type = "toggle",
-					name = L["LFG Frame"],
+					name = L["Inspect Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				mounts = {
+				lfguild = {
 					type = "toggle",
-					name = L["Mounts & Pets"],
+					name = L["LF Guild Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				quest = {
+				lfd = {
 					type = "toggle",
-					name = L["Quest Frames"],
+					name = L["LFD Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				petition = {
+				lfr = {
 					type = "toggle",
-					name = L["Petition Frame"],
+					name = L["LFR Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				dressingroom = {
+				macro = {
 					type = "toggle",
-					name = L["Dressing Room"],
+					name = L["Macro Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				pvp = {
+				mail = {
 					type = "toggle",
-					name = L["PvP Frames"],
+					name = L["Mail Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				nonraid = {
+				merchant = {
 					type = "toggle",
-					name = L["Non-Raid Frame"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				friends = {
-					type = "toggle",
-					name = L["Friends"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				spellbook = {
-					type = "toggle",
-					name = L["Spellbook"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				character = {
-					type = "toggle",
-					name = L["Character Frame"],
+					name = L["Merchant Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				misc = {
@@ -260,19 +184,44 @@ E.Options.args.skins = {
 					name = L["Misc Frames"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				tabard = {
+				petition = {
 					type = "toggle",
-					name = L["Tabard Frame"],
+					name = L["Petition Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				guildregistrar = {
+				pvp = {
 					type = "toggle",
-					name = L["Guild Registrar"],
+					name = L["PvP Frames"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				bags = {
+				quest = {
 					type = "toggle",
-					name = L["Bags"],
+					name = L["Quest Frames"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				raid = {
+					type = "toggle",
+					name = L["Raid Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				reforge = {
+					type = "toggle",
+					name = L["Reforging Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				socket = {
+					type = "toggle",
+					name = L["Socket Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				spellbook = {
+					type = "toggle",
+					name = L["Spellbook"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				guild = {
+					type = "toggle",
+					name = L["Guild Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				stable = {
@@ -280,35 +229,54 @@ E.Options.args.skins = {
 					name = L["Stable"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				bgmap = {
+				tabard = {
 					type = "toggle",
-					name = L["BG Map"],
+					name = L["Tabard Frame"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
-				--CHANGES:Lanrutcon:Commented MoP Stuff
-				--petbattleui = {
-				--	type = "toggle",
-				--	name = L["Pet Battle"],
-				--	desc = L["TOGGLESKIN_DESC"],
-				--},
-				losscontrol = {
+				talent = {
 					type = "toggle",
-					name = L["Loss Control"],
+					name = L["Talent Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				taxi = {
+					type = "toggle",
+					name = L["Taxi Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				timemanager = {
+					type = "toggle",
+					name = L["Time Manager"],
+					desc = L["TOGGLESKIN_DESC"],	
+				},
+				transmogrify = {
+					type = 'toggle',
+					name = L["Transmogrify Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				trade = {
+					type = "toggle",
+					name = L["Trade Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				tradeskill = {
+					type = "toggle",
+					name = L["TradeSkill Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				trainer = {
+					type = "toggle",
+					name = L["Trainer Frame"],
+					desc = L["TOGGLESKIN_DESC"],
+				},
+				worldmap = {
+					type = "toggle",
+					name = L["World Map"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 				voidstorage = {
 					type = "toggle",
 					name = L["Void Storage"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				itemUpgrade = {
-					type = "toggle",
-					name = L["Item Upgrade"],
-					desc = L["TOGGLESKIN_DESC"],
-				},
-				questChoice = {
-					type = "toggle",
-					name = L["Quest Choice"],
 					desc = L["TOGGLESKIN_DESC"],
 				},
 			},

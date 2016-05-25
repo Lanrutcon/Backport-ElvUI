@@ -65,7 +65,7 @@ end
 local __buttons = {}
 --if(C_StorePublic.IsEnabled()) then
 	__buttons[10] = "StoreMicroButton"
-	for i=10, #MICRO_BUTTONS do
+	for i=12, #MICRO_BUTTONS do
 		__buttons[i + 1] = MICRO_BUTTONS[i]
 	end
 --end
@@ -104,7 +104,6 @@ function AB:UpdateMicroPositionDimensions()
 	else
 		ElvUI_MicroBar:SetAlpha(self.db.microbar.alpha)
 	end
-	print("MicrobarTest");
 	ElvUI_MicroBar:SetWidth((((CharacterMicroButton:GetWidth() - 0.5) * (#MICRO_BUTTONS - 2)) - 3) / numRows)
 	ElvUI_MicroBar:Height((CharacterMicroButton:GetHeight() - 27) * numRows)
 

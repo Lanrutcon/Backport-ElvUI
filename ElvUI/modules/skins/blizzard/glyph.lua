@@ -4,41 +4,70 @@ local S = E:GetModule('Skins')
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.talent ~= true then return end
 
-	GlyphFrame.background:ClearAllPoints()
-	GlyphFrame.background:SetAllPoints(PlayerTalentFrameInset)
-
-	GlyphFrame:HookScript('OnShow', function()
-		PlayerTalentFrameInset.backdrop:Show()
-	end)
-
-	GlyphFrame:HookScript('OnHide', function()
-		PlayerTalentFrameInset.backdrop:Hide()
-	end)
-
-	GlyphFrameSideInset:StripTextures()
-
-	GlyphFrameClearInfoFrame:CreateBackdrop('Default')
-	GlyphFrameClearInfoFrame.icon:SetTexCoord(unpack(E.TexCoords))
-	GlyphFrameClearInfoFrame:Width(GlyphFrameClearInfoFrame:GetWidth() - 2)
-	GlyphFrameClearInfoFrame:Height(GlyphFrameClearInfoFrame:GetHeight() - 2)
-	GlyphFrameClearInfoFrame.icon:Size(GlyphFrameClearInfoFrame:GetSize())
-	GlyphFrameClearInfoFrame:Point('TOPLEFT', GlyphFrame, 'BOTTOMLEFT', 6, -10)
-
-	S:HandleDropDownBox(GlyphFrameFilterDropDown, 212)
+	--GLYPHS TAB
+	GlyphFrameSparkleFrame:CreateBackdrop("Default")
+	GlyphFrameSparkleFrame:SetFrameLevel(GlyphFrameSparkleFrame:GetFrameLevel() + 2)
+	GlyphFrameSparkleFrame.backdrop:Point( "TOPLEFT", GlyphFrameSparkleFrame, "TOPLEFT", 3, -3 )
+	GlyphFrameSparkleFrame.backdrop:Point( "BOTTOMRIGHT", GlyphFrameSparkleFrame, "BOTTOMRIGHT", -3, 3 )
 	S:HandleEditBox(GlyphFrameSearchBox)
-	S:HandleScrollBar(GlyphFrameScrollFrameScrollBar, 5)
+	S:HandleDropDownBox(GlyphFrameFilterDropDown, 212)
+	
+	GlyphFrameBackground:SetParent(GlyphFrameSparkleFrame)
+	GlyphFrameBackground:SetPoint("TOPLEFT", 4, -4)
+	GlyphFrameBackground:SetPoint("BOTTOMRIGHT", -4, 4)
 
-	for i=1, 10 do
+	GlyphFrame.levelOverlay1:SetParent(GlyphFrameSparkleFrame)
+	GlyphFrame.levelOverlayText1:SetParent(GlyphFrameSparkleFrame)
+	GlyphFrame.levelOverlay2:SetParent(GlyphFrameSparkleFrame)
+	GlyphFrame.levelOverlayText2:SetParent(GlyphFrameSparkleFrame)
+	
+	for i=1, 9 do
+		_G["GlyphFrameGlyph"..i]:SetFrameLevel(_G["GlyphFrameGlyph"..i]:GetFrameLevel() + 5)
+	end
+	
+	for i=1, 3 do
+		_G["GlyphFrameHeader"..i]:StripTextures()
+	end
+
+	local function Glyphs(self, first, i)
 		local button = _G["GlyphFrameScrollFrameButton"..i]
 		local icon = _G["GlyphFrameScrollFrameButton"..i.."Icon"]
 
-		button:StripTextures()
-		S:HandleButton(button)
-		icon:SetTexCoord(unpack(E.TexCoords))
+		if first then
+			button:StripTextures()
+		end
+
+		if icon then
+			icon:SetTexCoord(unpack(E.TexCoords))
+			S:HandleButton(button)
+		end
 	end
 
-	GlyphFrameHeader1:StripTextures()
-	GlyphFrameHeader2:StripTextures()
+	for i=1, 10 do
+		Glyphs(nil, true, i)
+	end
+
+	GlyphFrameClearInfoFrameIcon:SetTexCoord(unpack(E.TexCoords))
+	GlyphFrameClearInfoFrameIcon:ClearAllPoints()
+	GlyphFrameClearInfoFrameIcon:Point("TOPLEFT", 2, -2)
+	GlyphFrameClearInfoFrameIcon:Point("BOTTOMRIGHT", -2, 2)
+	
+	GlyphFrameClearInfoFrame:CreateBackdrop("Default", true)
+	GlyphFrameClearInfoFrame.backdrop:SetAllPoints()
+	GlyphFrameClearInfoFrame:StyleButton()
+	GlyphFrameClearInfoFrame:Size(25, 25)
+	
+	S:HandleScrollBar(GlyphFrameScrollFrameScrollBar, 5)
+
+	local StripAllTextures = {
+		"GlyphFrameScrollFrame",
+		"GlyphFrameSideInset",
+		"GlyphFrameScrollFrameScrollChild",
+	}
+
+	for _, object in pairs(StripAllTextures) do
+		_G[object]:StripTextures()
+	end
 end
 
 S:RegisterSkin("Blizzard_GlyphUI", LoadSkin)
