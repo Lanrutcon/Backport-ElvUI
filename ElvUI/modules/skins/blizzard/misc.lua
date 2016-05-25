@@ -591,7 +591,7 @@ local function LoadSkin()
 	ChatConfigCombatSettingsFiltersCopyFilterButton:Point("RIGHT", ChatConfigCombatSettingsFiltersAddFilterButton, "LEFT", -1, 0);
 	
 	S:HandleNextPrevButton(ChatConfigMoveFilterUpButton, true);
-	--S:SquareButton_SetIcon(ChatConfigMoveFilterUpButton, "UP");
+	S:SquareButton_SetIcon(ChatConfigMoveFilterUpButton, "UP");
 	ChatConfigMoveFilterUpButton:Size(26);
 	ChatConfigMoveFilterUpButton:Point("TOPLEFT", ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, -1);
 	S:HandleNextPrevButton(ChatConfigMoveFilterDownButton, true);

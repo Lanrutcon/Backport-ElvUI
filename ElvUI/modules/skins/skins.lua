@@ -6,6 +6,21 @@ S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
 S.allowBypass = {}
 
+S.SQUARE_BUTTON_TEXCOORDS = {
+	["UP"] = {     0.45312500,    0.64062500,     0.01562500,     0.20312500};
+	["DOWN"] = {   0.45312500,    0.64062500,     0.20312500,     0.01562500};
+	["LEFT"] = {   0.23437500,    0.42187500,     0.01562500,     0.20312500};
+	["RIGHT"] = {  0.42187500,    0.23437500,     0.01562500,     0.20312500};
+	["DELETE"] = { 0.01562500,    0.20312500,     0.01562500,     0.20312500}
+};
+
+function S:SquareButton_SetIcon(self, name)
+	local coords = S.SQUARE_BUTTON_TEXCOORDS[strupper(name)];
+	if(coords) then
+		self.icon:SetTexCoord(coords[1], coords[2], coords[3], coords[4]);
+	end
+end
+
 local find = string.find
 
 function S:SetModifiedBackdrop()
