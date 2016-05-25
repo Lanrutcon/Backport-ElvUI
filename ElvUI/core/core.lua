@@ -625,7 +625,7 @@ function E:UpdateAll(ignoreInstall)
 	LO:TopPanelVisibility()
 	LO:SetDataPanelStyle()
 
-	self:GetModule('Blizzard'):ObjectiveFrameHeight()
+	self:GetModule('Blizzard'):WatchFrameHeight()
 
 	collectgarbage('collect');
 end
@@ -861,7 +861,7 @@ function E:BeginHarlemShake()
 	self.massiveShakeObjects = {}
 	tinsert(self.massiveShakeObjects, GameTooltip)
 	tinsert(self.massiveShakeObjects, Minimap)
-	tinsert(self.massiveShakeObjects, ObjectiveTrackerFrame)
+	tinsert(self.massiveShakeObjects, WatchFrame)
 	tinsert(self.massiveShakeObjects, LeftChatPanel)
 	tinsert(self.massiveShakeObjects, RightChatPanel)
 	tinsert(self.massiveShakeObjects,LeftChatToggleButton)

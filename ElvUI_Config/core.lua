@@ -973,33 +973,22 @@ E.Options.args.general = {
 				},
 			},
 		},
-		objectiveFrame = {
+		watchFrame = {
 			order = 11,
 			type = "group",
-			name = L["Objective Frame"],
-			get = function(info) return E.db.general[ info[#info] ] end,
-			set = function(info, value) E.db.general[ info[#info] ] = value end,
+			name = L["Watch Frame"],
+			get = function(info) return E.db.general[ info[#info] ]; end,
+			set = function(info, value) E.db.general[ info[#info] ] = value; end,
 			args = {
-				objectiveFrameHeight = {
+				watchFrameHeight = {
 					order = 1,
-					type = 'range',
-					name = L["Objective Frame Height"],
-					desc = L["Height of the objective tracker. Increase size to be able to see more objectives."],
+					type = "range",
+					name = L["Watch Frame Height"],
+					desc = L["Height of the watch tracker. Increase size to be able to see more objectives."],
 					min = 400, max = E.screenheight, step = 1,
-					set = function(info, value) E.db.general.objectiveFrameHeight = value; E:GetModule('Blizzard'):ObjectiveFrameHeight(); end,
-				},
-				bonusObjectivePosition = {
-					order = 2,
-					type = 'select',
-					name = L["Bonus Reward Position"],
-					desc = L["Position of bonus quest reward frame relative to the objective tracker."],
-					values = {
-						['RIGHT'] = L["Right"],
-						['LEFT'] = L["Left"],
-						['AUTO'] = L["Auto"],
-					},
-				},
-			},
+					set = function(info, value) E.db.general.watchFrameHeight = value; E:GetModule('Blizzard'):WatchFrameHeight(); end
+				}
+			}
 		},
 	},
 }
