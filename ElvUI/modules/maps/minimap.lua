@@ -35,10 +35,6 @@ local menuList = {
 			HideUIPanel(PlayerTalentFrame)
 		end
 	end},
-	{text = COLLECTIONS,
-	func = function()
-		ToggleCollectionsJournal()
-	end},
 	{text = L["Farm Mode"],
 	func = FarmMode},
 	{text = TIMEMANAGER_TITLE,
@@ -49,8 +45,6 @@ local menuList = {
 	func = function() ToggleFriendsFrame() end},
 	{text = L["Calendar"],
 	func = function() GameTimeFrame:Click() end},
-	{text = GARRISON_LANDING_PAGE_TITLE,
-	func = function() GarrisonLandingPageMinimapButton_OnClick() end},
 	{text = ACHIEVEMENTS_GUILD_TAB,
 	func = function()
 		if IsInGuild() then
@@ -88,12 +82,8 @@ local menuList = {
 	end}
 }
 
---if(C_StorePublic.IsEnabled()) then
-	tinsert(menuList, {text = BLIZZARD_STORE, func = function() StoreMicroButton:Click() end})
---end
 tinsert(menuList, 	{text = HELP_BUTTON, func = function() ToggleHelpFrame() end})
 
---Support for other mods
 function GetMinimapShape()
 	return 'SQUARE'
 end
@@ -156,11 +146,6 @@ function M:Update_ZoneText()
 	if E.db.general.minimap.locationText == 'HIDE' or not E.private.general.minimap.enable then return; end
 	Minimap.location:SetText(strsub(GetMinimapZoneText(),1,46))
 	Minimap.location:SetTextColor(M:GetLocTextColor())
-end
-
-function M:PLAYER_REGEN_ENABLED()
-	self:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	self:UpdateSettings()
 end
 
 function M:UpdateSettings()
@@ -247,18 +232,6 @@ function M:UpdateSettings()
 		return;
 	end
 
-	if GarrisonLandingPageMinimapButton then
-		local pos = E.db.general.minimap.icons.garrison.position or "TOPLEFT"
-		local scale = E.db.general.minimap.icons.garrison.scale or 1
-		GarrisonLandingPageMinimapButton:ClearAllPoints()
-		GarrisonLandingPageMinimapButton:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.garrison.xOffset or 0, E.db.general.minimap.icons.garrison.yOffset or 0)
-		GarrisonLandingPageMinimapButton:SetScale(scale)
-		if GarrisonLandingPageTutorialBox then
-			GarrisonLandingPageTutorialBox:SetScale(1/scale)
-			GarrisonLandingPageTutorialBox:SetClampedToScreen(true)
-		end
-	end
-
 	if GameTimeFrame then
 		if E.private.general.minimap.hideCalendar then
 			GameTimeFrame:Hide()
@@ -272,23 +245,6 @@ function M:UpdateSettings()
 		end
 	end
 
-	if MiniMapMailFrame then
-		local pos = E.db.general.minimap.icons.mail.position or "TOPRIGHT"
-		local scale = E.db.general.minimap.icons.mail.scale or 1
-		MiniMapMailFrame:ClearAllPoints()
-		MiniMapMailFrame:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.mail.xOffset or 3, E.db.general.minimap.icons.mail.yOffset or 4)
-		MiniMapMailFrame:SetScale(scale)
-	end
-
-	if QueueStatusMinimapButton then
-		local pos = E.db.general.minimap.icons.lfgEye.position or "BOTTOMRIGHT"
-		local scale = E.db.general.minimap.icons.lfgEye.scale or 1
-		QueueStatusMinimapButton:ClearAllPoints()
-		QueueStatusMinimapButton:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.lfgEye.xOffset or 3, E.db.general.minimap.icons.lfgEye.yOffset or 0)
-		QueueStatusMinimapButton:SetScale(scale)
-		QueueStatusFrame:SetScale(1/scale)
-	end
-
 	if MiniMapInstanceDifficulty and GuildInstanceDifficulty then
 		local pos = E.db.general.minimap.icons.difficulty.position or "TOPLEFT"
 		local scale = E.db.general.minimap.icons.difficulty.scale or 1
@@ -300,14 +256,6 @@ function M:UpdateSettings()
 		GuildInstanceDifficulty:ClearAllPoints()
 		GuildInstanceDifficulty:SetPoint(pos, Minimap, pos, x, y)
 		GuildInstanceDifficulty:SetScale(scale)
-	end
-
-	if MiniMapChallengeMode then
-		local pos = E.db.general.minimap.icons.challengeMode.position or "TOPLEFT"
-		local scale = E.db.general.minimap.icons.challengeMode.scale or 1
-		MiniMapChallengeMode:ClearAllPoints()
-		MiniMapChallengeMode:SetPoint(pos, Minimap, pos, E.db.general.minimap.icons.challengeMode.xOffset or 8, E.db.general.minimap.icons.challengeMode.yOffset or -8)
-		MiniMapChallengeMode:SetScale(scale)
 	end
 end
 
@@ -345,10 +293,6 @@ function M:Initialize()
 		self.location:Hide()
 	end)
 
-	--Fix spellbook taint
-	ShowUIPanel(SpellBookFrame)
-	HideUIPanel(SpellBookFrame)
-
 	Minimap.location = Minimap:CreateFontString(nil, 'OVERLAY')
 	Minimap.location:FontTemplate(nil, nil, 'OUTLINE')
 	Minimap.location:Point('TOP', Minimap, 'TOP', 0, -2)
@@ -360,41 +304,18 @@ function M:Initialize()
 
 	MinimapBorder:Hide()
 	MinimapBorderTop:Hide()
-
 	MinimapZoomIn:Hide()
 	MinimapZoomOut:Hide()
-
-	MiniMapVoiceChatFrame:Hide()
-
 	MinimapNorthTag:Kill()
-
 	MinimapZoneTextButton:Hide()
-
 	MiniMapTracking:Hide()
-
-	MiniMapMailBorder:Hide()
-	MiniMapMailIcon:SetTexture("Interface\\AddOns\\ElvUI\\media\\textures\\mail")
-
-	if E.private.general.minimap.hideGarrison then
-		GarrisonLandingPageMinimapButton:Kill()
-		GarrisonLandingPageMinimapButton.IsShown = function() return true end
-	end
-
-	QueueStatusMinimapButtonBorder:Hide()
-	QueueStatusFrame:SetClampedToScreen(true)
-
-	MiniMapWorldMapButton:Hide()
+	MiniMapWorldMapButton:Kill()
 
 	MiniMapInstanceDifficulty:SetParent(Minimap)
 	GuildInstanceDifficulty:SetParent(Minimap)
-	MiniMapChallengeMode:SetParent(Minimap)
 
 	if TimeManagerClockButton then
 		TimeManagerClockButton:Kill()
-	end
-
-	if FeedbackUIButton then
-		FeedbackUIButton:Kill()
 	end
 
 	E:CreateMover(MMHolder, 'MinimapMover', L["Minimap"])
@@ -473,14 +394,6 @@ function M:Initialize()
 			FarmModeMap:Hide()
 		end
 	end)
-
-	--PET JOURNAL TAINT FIX AS OF 5.1
-	--[[local info = UIPanelWindows['PetJournalParent'];
-	for name, value in pairs(info) do
-		PetJournalParent:SetAttribute("UIPanelLayout-"..name, value);
-	end
-
-	PetJournalParent:SetAttribute("UIPanelLayout-defined", true);]]
 end
 
 E:RegisterInitialModule(M:GetName())
