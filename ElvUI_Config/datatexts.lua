@@ -135,7 +135,6 @@ E.Options.args.datatexts = {
 				['SHORT'] = L["Short"],
 				['SHORTINT'] = L["Short (Whole Numbers)"],
 				['CONDENSED'] = L["Condensed"],
-				['BLIZZARD'] = L["Blizzard Style"],
 			},
 		},
 		goldCoins = {
