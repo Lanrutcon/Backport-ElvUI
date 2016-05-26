@@ -146,7 +146,7 @@ local function LoadSkin(event)
 	
 	S:HandleCloseButton(AchievementFrameCloseButton, AchievementFrame.backdrop);
 	S:HandleDropDownBox(AchievementFrameFilterDropDown);
-	AchievementFrameFilterDropDown:Point("TOPRIGHT", AchievementFrame, "TOPRIGHT", -44, 5);
+	AchievementFrameFilterDropDown:Point("TOPRIGHT", AchievementFrame, "TOPRIGHT", -44, 2);
 	
 	S:HandleScrollBar(AchievementFrameCategoriesContainerScrollBar, 5);
 	S:HandleScrollBar(AchievementFrameAchievementsContainerScrollBar, 5);
@@ -159,44 +159,44 @@ local function LoadSkin(event)
 	end
 	
 	local function SkinStatusBar(bar)
-		bar:StripTextures();
-		bar:SetStatusBarTexture(E["media"].normTex);
-		bar:SetStatusBarColor(4/255, 179/255, 30/255);
-		bar:CreateBackdrop("Default");
-		E:RegisterStatusBar(bar);
+		bar:StripTextures()
+		bar:SetStatusBarTexture(E["media"].normTex)
+		bar:SetStatusBarColor(4/255, 179/255, 30/255)
+		bar:CreateBackdrop("Default")
 		
-		local barName = bar:GetName();
-		if(_G[barName .. "Title"]) then
-			_G[barName .. "Title"]:Point("LEFT", 4, 0);
+		if _G[bar:GetName().."Title"] then
+			_G[bar:GetName().."Title"]:SetPoint("LEFT", 4, 0)
+		end
+
+		if _G[bar:GetName().."Label"] then
+			_G[bar:GetName().."Label"]:SetPoint("LEFT", 4, 0)
 		end
 		
-		if(_G[barName .. "Label"]) then
-			_G[barName .. "Label"]:Point("LEFT", 4, 0);
-		end
-		
-		if(_G[barName .. "Text"]) then
-			_G[barName .. "Text"]:Point("RIGHT", -4, 0);
+		if _G[bar:GetName().."Text"] then
+			_G[bar:GetName().."Text"]:SetPoint("RIGHT", -4, 0)
 		end
 	end
 	
-	SkinStatusBar(AchievementFrameSummaryCategoriesStatusBar);
-	SkinStatusBar(AchievementFrameComparisonSummaryPlayerStatusBar);
-	SkinStatusBar(AchievementFrameComparisonSummaryFriendStatusBar);
-	AchievementFrameComparisonSummaryFriendStatusBar.text:ClearAllPoints();
-	AchievementFrameComparisonSummaryFriendStatusBar.text:Point("CENTER");
-	AchievementFrameComparisonHeader:Point("BOTTOMRIGHT", AchievementFrameComparison, "TOPRIGHT", 45, -20);
+	SkinStatusBar(AchievementFrameSummaryCategoriesStatusBar)
+	SkinStatusBar(AchievementFrameComparisonSummaryPlayerStatusBar)
+	SkinStatusBar(AchievementFrameComparisonSummaryFriendStatusBar)
+	AchievementFrameComparisonSummaryFriendStatusBar.text:ClearAllPoints()
+	AchievementFrameComparisonSummaryFriendStatusBar.text:SetPoint("CENTER")
+	AchievementFrameComparisonHeader:Point("BOTTOMRIGHT", AchievementFrameComparison, "TOPRIGHT", 45, -20)
 	
-	for i = 1, 8 do
-		local frame = _G["AchievementFrameSummaryCategoriesCategory" .. i];
-		local button = _G["AchievementFrameSummaryCategoriesCategory" .. i .. "Button"];
-		local highlight = _G["AchievementFrameSummaryCategoriesCategory" .. i .. "ButtonHighlight"];
-		SkinStatusBar(frame);
-		button:StripTextures();
-		highlight:StripTextures();
+	for i=1, 8 do
+		local frame = _G["AchievementFrameSummaryCategoriesCategory"..i]
+		local button = _G["AchievementFrameSummaryCategoriesCategory"..i.."Button"]
+		local highlight = _G["AchievementFrameSummaryCategoriesCategory"..i.."ButtonHighlight"]
+		SkinStatusBar(frame)
+		button:StripTextures()
+		highlight:StripTextures()
 		
-		_G[highlight:GetName() .. "Middle"]:SetTexture(1, 1, 1, 0.3);
-		_G[highlight:GetName() .. "Middle"]:SetAllPoints(frame);
+		_G[highlight:GetName().."Middle"]:SetTexture(1, 1, 1, 0.3)
+		_G[highlight:GetName().."Middle"]:SetAllPoints(frame)
 	end
+	
+
 	
 	hooksecurefunc("AchievementFrameSummary_UpdateAchievements", function()
 		for i = 1, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
