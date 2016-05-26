@@ -206,6 +206,14 @@ E.Options.args.general = {
 					get = function(info) return E.global.general.smallerWorldMap end,
 					set = function(info, value) E.global.general.smallerWorldMap = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
+				worldMapCoordinates = {
+					order = 18,
+ 					type = "toggle",
+					name = L["World Map Coordinates"],
+					desc = L["Puts coordinates on the world map."],
+					get = function(info) return E.global.general.worldMapCoordinates; end,
+					set = function(info, value) E.global.general.worldMapCoordinates = value; E:StaticPopup_Show("GLOBAL_RL"); end
+				},
 				chatBubbles = {
 					order = 30,
 					type = "group",
