@@ -1,8 +1,11 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
+local E, L, V, P, G = unpack(select(2, ...));
+local S = E:GetModule("Skins");
+
+local unpack = unpack;
 
 local function LoadSkin()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.trainer ~= true then return end
+	if(E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.trainer ~= true) then return; end
+
 	--Class Trainer Frame
 	local StripAllTextures = {
 		"ClassTrainerFrame",
@@ -72,4 +75,4 @@ local function LoadSkin()
 	ClassTrainerStatusBar.rankText:SetPoint("CENTER", ClassTrainerStatusBar, "CENTER")
 end
 
-S:RegisterSkin("Blizzard_TrainerUI", LoadSkin)
+S:RegisterSkin("Blizzard_TrainerUI", LoadSkin);

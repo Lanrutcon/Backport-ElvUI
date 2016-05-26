@@ -1,8 +1,12 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
+local E, L, V, P, G = unpack(select(2, ...));
+local S = E:GetModule("Skins");
+
+local _G = _G;
+local unpack = unpack;
 
 local function LoadSkin()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.tradeskill ~= true then return end
+	if(E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.tradeskill ~= true) then return; end
+
 	TradeSkillFrame:StripTextures(true)
 	TradeSkillListScrollFrame:StripTextures()
 	TradeSkillDetailScrollFrame:StripTextures()
@@ -88,4 +92,4 @@ local function LoadSkin()
 	S:HandleCloseButton(TradeSkillGuildFrameCloseButton)
 end
 
-S:RegisterSkin("Blizzard_TradeSkillUI", LoadSkin)
+S:RegisterSkin("Blizzard_TradeSkillUI", LoadSkin);

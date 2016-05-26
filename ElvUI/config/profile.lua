@@ -15,8 +15,7 @@ P['general'] = {
 	['autoAcceptInvite'] = false,
 	['bottomPanel'] = true,
 	['hideErrorFrame'] = true,
-	['objectiveFrameHeight'] = 480,
-	['bonusObjectivePosition'] = "LEFT",
+	["watchFrameHeight"] = 450,
 
 	['afk'] = true,
 

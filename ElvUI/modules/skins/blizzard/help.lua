@@ -1,8 +1,10 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
+local E, L, V, P, G = unpack(select(2, ...));
+local S = E:GetModule("Skins");
 
 local function LoadSkin()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.help ~= true then return end
+	if(E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.help ~= true) then return; end
+
+
 	local frames = {
 		"HelpFrameLeftInset",
 		"HelpFrameMainInset",
@@ -11,13 +13,18 @@ local function LoadSkin()
 	}
 
 	local buttons = {
+		"HelpFrameOpenTicketHelpItemRestoration",
 		"HelpFrameAccountSecurityOpenTicket",
 		"HelpFrameOpenTicketHelpOpenTicket",
 		"HelpFrameKnowledgebaseSearchButton",
+		"HelpFrameOpenTicketHelpTopIssues",
 		"HelpFrameKnowledgebaseNavBarHomeButton",
 		"HelpFrameCharacterStuckStuck",
 		"HelpFrameButton16",
 		"HelpFrameSubmitSuggestionSubmit",
+		"GMChatOpenLog",
+		"HelpFrameTicketSubmit",
+		"HelpFrameTicketCancel",
 		"HelpFrameReportBugSubmit",
 	}
 
@@ -28,9 +35,6 @@ local function LoadSkin()
 	end
 
 	HelpFrameHeader:StripTextures(true)
-	HelpFrameHeader:CreateBackdrop("Default", true)
-	HelpFrameHeader:SetFrameLevel(HelpFrameHeader:GetFrameLevel() + 2)
-	HelpFrameKnowledgebaseErrorFrame:SetFrameLevel(HelpFrameKnowledgebaseErrorFrame:GetFrameLevel() + 2)
 
 	HelpFrameReportBugScrollFrame:StripTextures()
 	HelpFrameReportBugScrollFrame:CreateBackdrop("Transparent")
@@ -44,6 +48,19 @@ local function LoadSkin()
 	end
 
 	S:HandleScrollBar(HelpFrameReportBugScrollFrameScrollBar)
+
+	S:HandleScrollBar(HelpFrameTicketScrollFrameScrollBar)
+
+	HelpFrameTicketScrollFrame:StripTextures()
+	HelpFrameTicketScrollFrame:CreateBackdrop("Transparent")
+	HelpFrameTicketScrollFrame.backdrop:Point("TOPLEFT", -4, 4)
+	HelpFrameTicketScrollFrame.backdrop:Point("BOTTOMRIGHT", 6, -4)
+	for i=1, HelpFrameTicket:GetNumChildren() do
+		local child = select(i, HelpFrameTicket:GetChildren())
+		if not child:GetName() then
+			child:StripTextures()
+		end
+	end
 
 	HelpFrameSubmitSuggestionScrollFrame:StripTextures()
 	HelpFrameSubmitSuggestionScrollFrame:CreateBackdrop("Transparent")
@@ -116,4 +133,4 @@ local function LoadSkin()
 	end
 end
 
-S:RegisterSkin('ElvUI', LoadSkin)
+S:RegisterSkin("ElvUI", LoadSkin);

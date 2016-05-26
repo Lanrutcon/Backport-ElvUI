@@ -10,21 +10,9 @@ function B:Initialize()
 	self:PositionCaptureBar()
 	self:PositionDurabilityFrame()
 	self:PositionGMFrames()
-	self:SkinBlizzTimers()
 	self:PositionVehicleFrame()
 	self:PositionAltPowerBar()
-
-	if not IsAddOnLoaded("DugisGuideViewerZ") then
-		self:MoveObjectiveFrame()
-	end
-
-	E:CreateMover(LossOfControlFrame, 'LossControlMover', L["Loss Control Icon"])
-
-	CreateFrame("Frame"):SetScript("OnUpdate", function(self, elapsed)
-		if LFRBrowseFrame.timeToClear then
-			LFRBrowseFrame.timeToClear = nil
-		end
-	end)
+	self:MoveWatchFrame()
 end
 
 E:RegisterModule(B:GetName())

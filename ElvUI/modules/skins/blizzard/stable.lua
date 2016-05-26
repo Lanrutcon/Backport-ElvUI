@@ -1,8 +1,8 @@
-local E, L, V, P, G, _ = unpack(select(2, ...)) --Import: Engine, Locales, ProfileDB, GlobalDB
-local S = E:GetModule('Skins')
+local E, L, V, P, G, _ = unpack(select(2, ...));
+local S = E:GetModule("Skins");
 
 local function LoadSkin()
-	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.stable ~= true then return end
+	if(E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.stable ~= true) then return; end
 
 	PetStableFrame:StripTextures()
 	PetStableFrameInset:StripTextures()
@@ -29,6 +29,7 @@ local function LoadSkin()
 	end
 
 	PetStableSelectedPetIcon:SetTexCoord(unpack(E.TexCoords))
+
 end
 
-S:RegisterSkin('ElvUI', LoadSkin)
+S:RegisterSkin("ElvUI", LoadSkin);
