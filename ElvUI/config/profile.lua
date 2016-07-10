@@ -31,12 +31,6 @@ P['general'] = {
 		['size'] = 176,
 		['locationText'] = 'MOUSEOVER',
 		['icons'] = {
-			['garrison'] = {
-				['scale'] = 0.8,
-				['position'] = "TOPLEFT",
-				['xOffset'] = 0,
-				['yOffset'] = 0,
-			},
 			['calendar'] = {
 				['scale'] = 1,
 				['position'] = "TOPRIGHT",
@@ -60,12 +54,6 @@ P['general'] = {
 				['position'] = "TOPLEFT",
 				['xOffset'] = 0,
 				['yOffset'] = 0,
-			},
-			['challengeMode'] = {
-				['scale'] = 1,
-				['position'] = "TOPLEFT",
-				['xOffset'] = 8,
-				['yOffset'] = -8,
 			},
 			['vehicleLeave'] = {
 				['size'] = 26,
@@ -247,7 +235,7 @@ P['auras'] = {
 	['timeXOffset'] = 0,
 
 	['consolidatedBuffs'] = {
-		['enable'] = true,
+		['enable'] = false,
 		['filter'] = true,
 		['durations'] = true,
 		['position'] = "RIGHT",
@@ -330,27 +318,27 @@ P['datatexts'] = {
 
 	['panels'] = {
 		['LeftChatDataPanel'] = {
-			['left'] = 'Talent/Loot Specialization',
-			['middle'] = 'Durability',
-			['right'] = 'Garrison',
+			['left'] = 'Guild',
+			['middle'] = 'Friends',
+			['right'] = 'Durability',
 		},
 		['RightChatDataPanel'] = {
-			['left'] = 'System',
-			['middle'] = 'Time',
+			['left'] = 'Combat/Arena Time',
+			['middle'] = 'System',
 			['right'] = 'Gold',
 		},
-		['LeftMiniPanel'] = 'Guild',
-		['RightMiniPanel'] = 'Friends',
+		['LeftMiniPanel'] = 'ElvUI Config',
+		['RightMiniPanel'] = 'Time',
 	},
 	['localtime'] = true,
-	['time24'] = false,
+	['time24'] = true,
 	['battleground'] = true,
 	['minimapPanels'] = true,
 	['leftChatPanel'] = true,
 	['rightChatPanel'] = true,
 	['panelTransparency'] = false,
-	['goldFormat'] = 'BLIZZARD',
-	['goldCoins'] = false,
+	['goldFormat'] = 'smart',
+	['goldCoins'] = true,
 	["noCombatClick"] = false,
 	["noCombatHover"] = false,
 }
