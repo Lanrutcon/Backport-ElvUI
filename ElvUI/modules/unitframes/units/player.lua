@@ -42,19 +42,19 @@ function UF:Construct_PlayerFrame(frame)
 		frame.EclipseBar = self:Construct_DruidResourceBar(frame)
 		frame.DruidAltMana = self:Construct_DruidAltManaBar(frame)
 		frame.ClassBar = 'EclipseBar'
-	elseif E.myclass == "MONK" then
-		frame.Harmony = self:Construct_MonkResourceBar(frame)
-		frame.Stagger = self:Construct_Stagger(frame)
-		frame.ClassBar = 'Harmony'
+	--elseif E.myclass == "MONK" then
+	--	frame.Harmony = self:Construct_MonkResourceBar(frame)
+	--	frame.Stagger = self:Construct_Stagger(frame)
+	--	frame.ClassBar = 'Harmony'
 	elseif E.myclass == "PRIEST" then
 		frame.ShadowOrbs = self:Construct_PriestResourceBar(frame)
 		frame.ClassBar = 'ShadowOrbs'
 	elseif E.myclass == 'MAGE' then
 		frame.ArcaneChargeBar = self:Construct_MageResourceBar(frame)
 		frame.ClassBar = 'ArcaneChargeBar'
-	elseif E.myclass == 'ROGUE' then
-		frame.Anticipation = self:Construct_RogueResourceBar(frame)
-		frame.ClassBar = 'Anticipation'
+	--elseif E.myclass == 'ROGUE' then
+	--	frame.Anticipation = self:Construct_RogueResourceBar(frame)
+	--	frame.ClassBar = 'Anticipation'
 	end
 
 	frame.RaidIcon = UF:Construct_RaidIcon(frame)
@@ -865,7 +865,7 @@ function UF:Update_PlayerFrame(frame, db)
 						bars[i].backdrop:Show()
 					end
 
-					if E.myclass == 'ROGUE' then
+					if E.myclass == 'ROGUE' then						
 						bars[i]:SetStatusBarColor(unpack(ElvUF.colors[frame.ClassBar][i]))
 
 						if bars[i].bg then

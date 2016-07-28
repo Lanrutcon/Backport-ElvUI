@@ -1,3 +1,11 @@
+---------------------
+--Missing functions
+--
+
+local function UnitGetTotalAbsorbs()
+	return 0;
+end
+
 local _, ns = ...
 local oUF = ns.oUF
 

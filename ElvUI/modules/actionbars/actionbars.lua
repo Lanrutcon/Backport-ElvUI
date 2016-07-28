@@ -36,7 +36,7 @@ AB["barDefaults"] = {
 	["bar1"] = {
 		['page'] = 1,
 		['bindButtons'] = "ACTIONBUTTON",
-		['conditions'] = format("[vehicleui] %d; [possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetVehicleBarIndex(), GetOverrideBarIndex()),
+		['conditions'] = format("[vehicleui] %d; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex()),
 		['position'] = "BOTTOM,ElvUIParent,BOTTOM,0,4",
 	},
 	["bar2"] = {
@@ -406,9 +406,9 @@ end
 
 function AB:UpdateBar1Paging()
 	if self.db.bar6.enabled then
-		E.ActionBars.barDefaults.bar1.conditions = format("[vehicleui] %d; [possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetVehicleBarIndex(), GetOverrideBarIndex())
+		E.ActionBars.barDefaults.bar1.conditions = format("[vehicleui] %d; [form,noform] 0; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex())
 	else
-		E.ActionBars.barDefaults.bar1.conditions = format("[vehicleui] %d; [possessbar] %d; [overridebar] %d; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex(), GetVehicleBarIndex(), GetOverrideBarIndex())
+		E.ActionBars.barDefaults.bar1.conditions = format("[vehicleui] %d; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;", GetVehicleBarIndex())
 	end
 
 	if (E.private.actionbar.enable ~= true or InCombatLockdown()) or not self.isInitialized then return; end
@@ -934,7 +934,6 @@ function AB:VehicleFix()
 end
 
 function AB:Initialize()
-	print("init actionbar");
 	self.db = E.db.actionbar
 	if E.private.actionbar.enable ~= true then return; end
 	

@@ -329,13 +329,15 @@ function UF:UpdateColors()
 	ElvUF.colors.ComboPoints[4] = E:GetColorTable(db.classResources.comboPoints[4])
 	ElvUF.colors.ComboPoints[5] = E:GetColorTable(db.classResources.comboPoints[5])
 
+	--[[
 	ElvUF.colors.Anticipation = {}
 	ElvUF.colors.Anticipation[1] = E:GetColorTable(db.classResources.ROGUE[1])
 	ElvUF.colors.Anticipation[2] = E:GetColorTable(db.classResources.ROGUE[2])
 	ElvUF.colors.Anticipation[3] = E:GetColorTable(db.classResources.ROGUE[3])
 	ElvUF.colors.Anticipation[4] = E:GetColorTable(db.classResources.ROGUE[4])
 	ElvUF.colors.Anticipation[5] = E:GetColorTable(db.classResources.ROGUE[5])
-
+	]]--
+	
 	ElvUF.colors.ShadowOrbs = E:GetColorTable(db.classResources.PRIEST);
 
 	ElvUF.colors.EclipseBar = {}
@@ -1004,10 +1006,10 @@ function ElvUF:DisableBlizzard(unit)
 		HandleFrame(PlayerFrame)
 
 		-- For the damn vehicle support:
-		PlayerFrame:RegisterUnitEvent('UNIT_ENTERING_VEHICLE', "player")
-		PlayerFrame:RegisterUnitEvent('UNIT_ENTERED_VEHICLE', "player")
-		PlayerFrame:RegisterUnitEvent('UNIT_EXITING_VEHICLE', "player")
-		PlayerFrame:RegisterUnitEvent('UNIT_EXITED_VEHICLE', "player")
+		PlayerFrame:RegisterEvent('UNIT_ENTERING_VEHICLE')--, "player")
+		PlayerFrame:RegisterEvent('UNIT_ENTERED_VEHICLE')--, "player")
+		PlayerFrame:RegisterEvent('UNIT_EXITING_VEHICLE')--, "player")
+		PlayerFrame:RegisterEvent('UNIT_EXITED_VEHICLE')--, "player")
 		PlayerFrame:RegisterEvent('PLAYER_ENTERING_WORLD')
 
 		-- User placed frames don't animate
@@ -1107,7 +1109,7 @@ function UF:Initialize()
 	local ElvUF_Parent = CreateFrame('Frame', 'ElvUF_Parent', E.UIParent, 'SecureHandlerStateTemplate');
 	
 	--CHANGES:Lanrutcon:MoP stuff
-	--RegisterStateDriver(ElvUF_Parent, "visibility", "[petbattle] hide; show")
+	RegisterStateDriver(ElvUF_Parent, "visibility", "show")
 
 	self:UpdateColors()
 	ElvUF:RegisterStyle('ElvUF', function(frame, unit)

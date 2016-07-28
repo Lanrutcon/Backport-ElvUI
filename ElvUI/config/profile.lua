@@ -2149,7 +2149,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar3'] = {
 		['enabled'] = true,
@@ -2164,7 +2164,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar4'] = {
 		['enabled'] = true,
@@ -2179,7 +2179,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar5'] = {
 		['enabled'] = true,
@@ -2194,7 +2194,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['bar6'] = {
 		['enabled'] = false,
@@ -2209,7 +2209,7 @@ P["actionbar"] = {
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
 		['paging'] = {},
-		['visibility'] = "[vehicleui] hide; [overridebar] hide;" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
+		['visibility'] = "[vehicleui] hide" --CHANGES:Lanrutcon:MoP stuff [petbattle] hide; show",
 	},
 	['barPet'] = {
 		['enabled'] = true,
@@ -2223,7 +2223,7 @@ P["actionbar"] = {
 		["buttonsize"] = 32,
 		["buttonspacing"] = 2,
 		['alpha'] = 1,
-		['visibility'] = "[pet,novehicleui,nooverridebar,nopossessbar] show;hide",
+		['visibility'] = "[pet,novehicleui] show;hide",
 	},
 	['stanceBar'] = {
 		['enabled'] = true,

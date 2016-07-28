@@ -36,6 +36,16 @@ local function LoadSkin()
 	--S:HandleCheckBox(DropDownList1Button1)
 	--S:HandleCheckBox(DropDownList1Button2)
 	
+	
+	--CHANGES:Lanrutcon:Adding Player & Mouse coordinates
+	coords = CreateFrame("FRAME", "WorldFrameCoords", WorldMapFrame);
+	coords:SetSize(500, 25);
+	coords:SetPoint("BOTTOM");
+	coords.PlayerText = coords:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall");
+	coords.PlayerText:SetPoint("LEFT");
+	coords.MouseText = coords:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall");
+	coords.MouseText:SetPoint("RIGHT");
+	
 	--Mini
 	local function SmallSkin()
 		WorldMapLevelDropDown:ClearAllPoints()
@@ -152,7 +162,9 @@ local function LoadSkin()
 			WorldMapFrameSizeUpButton:Hide()
 			WorldMapFrameSizeDownButton:Show()
 		end		
-
+		
+		--CHANGES:Lanrutcon: int was a nil value
+		int = int or 0;
 		int = int + 1
 		
 		if int >= 3 then

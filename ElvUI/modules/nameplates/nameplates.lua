@@ -799,7 +799,7 @@ function NP:HealthBar_OnSizeChanged(width, height)
 end
 
 function NP:HealthBar_OnValueChanged(value)
-	local blizzPlate = self:GetParent():GetParent()
+	local blizzPlate = self:GetParent()
 	local myPlate = NP.CreatedPlates[blizzPlate]
 	local minValue, maxValue = self:GetMinMaxValues()
 	myPlate.healthBar:SetMinMaxValues(minValue, maxValue)
@@ -840,7 +840,7 @@ end
 
 local green =  {r = 0, g = 1, b = 0}
 function NP:CastBar_OnValueChanged(value)
-	local blizzPlate = self:GetParent():GetParent()
+	local blizzPlate = self:GetParent()
 	local myPlate = NP.CreatedPlates[blizzPlate]
 	local min, max = self:GetMinMaxValues()
 	local isChannel = value < myPlate.castBar:GetValue()
@@ -849,7 +849,7 @@ function NP:CastBar_OnValueChanged(value)
 	myPlate.castBar.time:SetFormattedText("%.1f ", value)
 
 	local color
-	if(self.shield:IsShown()) then
+	if(self.shield and self.shield:IsShown()) then
 		color = NP.db.castBar.noInterrupt
 	else
 		--Color the castbar green slightly before it ends cast.
@@ -860,19 +860,24 @@ function NP:CastBar_OnValueChanged(value)
 		end
 	end
 
-	myPlate.castBar.name:SetText(blizzPlate.castBar.name:GetText())
-	myPlate.castBar.icon:SetTexture(blizzPlate.castBar.icon:GetTexture())
+	local spell, _, spellName, iconTexture = UnitCastingInfo("target");
+	--if spell is nil, then the target is channeling
+	if(not spell) then
+		spell, _, spellName, iconTexture = UnitChannelInfo("target");
+	end
+	myPlate.castBar.name:SetText(spellName)
+	myPlate.castBar.icon:SetTexture(iconTexture)
 
 	myPlate.castBar:SetStatusBarColor(color.r, color.g, color.b)
 end
 
 function NP:CastBar_OnShow()
-	local myPlate = NP.CreatedPlates[self:GetParent():GetParent()]
+	local myPlate = NP.CreatedPlates[self:GetParent()]
 	myPlate.castBar:Show()
 end
 
 function NP:CastBar_OnHide()
-	local myPlate = NP.CreatedPlates[self:GetParent():GetParent()]
+	local myPlate = NP.CreatedPlates[self:GetParent()]
 	myPlate.castBar:Hide()
 end
 
@@ -962,11 +967,26 @@ function NP:UpdateSettings()
 end
 
 function NP:CreatePlate(frame)
+
+	--local oldhp, oldcb = frame:GetChildren()
+	--local threat, hpborder, overlay, oldname, oldlevel, bossicon, raidicon, elite = frame:GetRegions()
+	--local _, cbborder, cbshield, cbicon = oldcb:GetRegions()
+	
+	
+	--local healthBar, castBar = frame:GetChildren();
+	--local threat, _, _, name, level = frame:GetRegions();
+	
+	--frame.healthbar = healthBar;
+	--frame.threat, frame.healthborder, frame.glow, frame.name, frame.level, frame.skull, frame.raidicons, frame.eliteicon = frame:GetRegions();
+	--frame.castbarfill, frame.castborder, frame.shield, frame.spellicon = castBar:GetRegions();
+	--frame.healthbarfill = healthBar:GetRegions();
+
+	
 	local f = {};
 	f.healthBar, f.castBar = frame:GetChildren();
-	f.threat, f.border, f.castBar.shield, f.castBar.border, f.castBar.icon, f.highlight, f.name, f.level, f.bossIcon, f.raidIcon, f.eliteIcon = frame:GetRegions();
+	f.threat, f.border, f.highlight, f.name, f.level, f.bossIcon, f.raidIcon, f.eliteIcon = frame:GetRegions();
 	local threat, hpborder, overlay, oldname, oldlevel, bossicon, raidicon, elite = frame:GetRegions()
-	local _, cbborder, cbshield, cbicon = cb:GetRegions()
+	local _, cbborder, cbshield, cbicon = f.castBar:GetRegions()
 	
 	frame.healthBar = f.healthBar
 	--frame.healthBar.texture = f.barFrame.healthbar.texture
@@ -1029,7 +1049,8 @@ function NP:CreatePlate(frame)
 	myPlate.castBar.name:SetPoint("TOPRIGHT", myPlate.castBar.time, "TOPLEFT", 0, -2)
 	myPlate.castBar.name:SetJustifyH("LEFT")
 
-	frame.castBar.icon:SetParent(myPlate.hiddenFrame)
+	--CHANGES:Lanrutcon: frame.castBar.icon is a nil value
+	--frame.castBar.icon:SetParent(myPlate.hiddenFrame)
 	myPlate.castBar.icon = myPlate.castBar:CreateTexture(nil, 'OVERLAY')
 	myPlate.castBar.icon:SetTexCoord(.07, .93, .07, .93)
 	myPlate.castBar.icon:SetDrawLayer("OVERLAY")
@@ -1137,9 +1158,10 @@ function NP:CreatePlate(frame)
 	NP:QueueObject(frame, frame.name)
 	NP:QueueObject(frame, frame.threat)
 	NP:QueueObject(frame, frame.border)
+	NP:QueueObject(frame, frame.highlight)
 	NP:QueueObject(frame, frame.castBar.shield)
 	NP:QueueObject(frame, frame.castBar.border)
-	--NP:QueueObject(frame, frame.castBar.shadow)
+	NP:QueueObject(frame, frame.castBar.shadow)
 	NP:QueueObject(frame, frame.bossIcon)
 	NP:QueueObject(frame, frame.eliteIcon)
 	NP:QueueObject(frame, frame.castBar.name)
@@ -1155,9 +1177,13 @@ function NP:CreatePlate(frame)
 end
 
 function NP:QueueObject(frame, object)
+	--CHANGES:Lanrutcon:Making sure that "object" exists
+	if not object then
+		return;
+	end
 	frame.queue = frame.queue or {}
 	frame.queue[object] = true
-
+	object:SetAlpha(0);
 	if object.OldTexture then
 		object:SetTexture(object.OldTexture)
 	end

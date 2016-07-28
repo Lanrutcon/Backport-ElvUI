@@ -1,3 +1,11 @@
+--MISSING FUNCTIONS
+
+local function GetWintergraspWaitTime()
+	return 0;
+end
+
+----------------------
+
 local E, L, P, G = unpack(select(2, ...));
 local DT = E:GetModule('DataTexts');
 

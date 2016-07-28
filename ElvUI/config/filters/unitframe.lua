@@ -3,7 +3,7 @@ local E, L, V, P, G, _ = unpack(select(2, ...)); --Engine
 local function SpellName(id)
 	local name, _, _, _, _, _, _, _, _ = GetSpellInfo(id)
 	if not name then
-		print('|cff1784d1ElvUI:|r SpellID is not valid: '..id..'. Please check for an updated version, if none exists report to ElvUI author.')
+		--print('|cff1784d1ElvUI:|r SpellID is not valid: '..id..'. Please check for an updated version, if none exists report to ElvUI author.')
 		return 'Impale'
 	else
 		return name

@@ -2164,7 +2164,7 @@ E.Options.args.unitframe.args.player = {
 			set = function(info, value) 
 				E.db.unitframe.units['player'][ info[#info] ] = value; 
 				UF:CreateAndUpdateUF('player');
-				LibStub("LibBodyguard-1.0"):UpdateSettings();
+				--LibStub("LibBodyguard-1.0"):UpdateSettings();
 				if value == true and E.db.unitframe.units.player.combatfade then
 					ElvUF_Pet:SetParent(ElvUF_Player)
 				else
@@ -2229,7 +2229,7 @@ E.Options.args.unitframe.args.player = {
 			set = function(info, value)
 				E.db.unitframe.units['player'][ info[#info] ] = value;
 				UF:CreateAndUpdateUF('player');
-				LibStub("LibBodyguard-1.0"):UpdateSettings();
+				--LibStub("LibBodyguard-1.0"):UpdateSettings();
 				if value == true and E.db.unitframe.units.player.enable then
 					ElvUF_Pet:SetParent(ElvUF_Player)
 				else
